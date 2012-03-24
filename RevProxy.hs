@@ -10,7 +10,8 @@ import Control.Applicative ((<$>))
 import Control.Exception (SomeException)
 import Control.Exception.Lifted (catch)
 import qualified Data.ByteString.Char8 as BS
-import Data.Conduit (Flush(..), ResourceT, Source)
+import qualified Data.ByteString.Search as BSS
+import Data.Conduit (Flush(..), ResourceT, Source, Conduit, conduitState, ConduitStateResult(..), ($=))
 import Data.Int (Int64)
 import Data.Maybe (fromMaybe)
 import qualified Network.HTTP.Conduit as H
@@ -20,7 +21,7 @@ import Prelude hiding (catch)
 import qualified Data.ByteString as B
 import qualified Data.ByteString.Char8 as BC
 import qualified Data.Text as T
-import qualified Blaze.ByteString.Builder as BB (fromByteString)
+import qualified Blaze.ByteString.Builder as BB
 
 data RevProxyRoute = RevProxyRoute {
     revProxyDomain :: B.ByteString
@@ -78,12 +79,27 @@ revProxyApp' mgr route req = do
         len = fromMaybe 0 mlen
         httpReq = toHTTPRequest req route len
     H.Response status hdr downbody <- http httpReq mgr
-    return $ ResponseSource status hdr (Chunk . BB.fromByteString <$> downbody)
+    return $ ResponseSource status hdr $ sourceToSource downbody (contentType hdr)
+  where
+    contentType hdr = lookup "content-type" hdr
 
 type Resp = ResourceT IO (H.Response (Source IO BS.ByteString))
 
 http :: H.Request IO -> H.Manager -> Resp
 http req mgr = H.http req mgr
+
+sourceToSource :: Source IO BS.ByteString -> Maybe BS.ByteString -> Source IO (Flush BB.Builder)
+sourceToSource downbody (Just "text/event-stream") = downbody $= eventStreamConduit
+sourceToSource downbody _ = Chunk . BB.fromByteString <$> downbody
+
+eventStreamConduit :: Conduit BS.ByteString IO (Flush BB.Builder)
+eventStreamConduit = conduitState "" push close
+  where
+    push rest input = return $ StateProducing (last xs) (concatMap conv $ init xs)
+      where
+        xs = BSS.split "\n\n" (rest `BS.append` input)
+        conv bs = [Chunk $ BB.fromByteString (bs `BS.append` "\n\n"), Flush]
+    close rest = return [Chunk $ BB.fromByteString rest]
 
 badGateway :: Request -> SomeException -> ResourceT IO Response
 badGateway _ _ = do
