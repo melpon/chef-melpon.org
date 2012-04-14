@@ -12,6 +12,7 @@ import Control.Exception.Lifted (catch)
 import qualified Data.ByteString.Char8 as BS
 import qualified Data.ByteString.Search as BSS
 import Data.Conduit (Flush(..), ResourceT, Source, Conduit, conduitState, ConduitStateResult(..), ($=))
+import qualified Data.Conduit.List as CL
 import Data.Int (Int64)
 import Data.Maybe (fromMaybe)
 import qualified Network.HTTP.Conduit as H
@@ -31,7 +32,7 @@ data RevProxyRoute = RevProxyRoute {
 
 type RevProxyRouteConv = Request -> Maybe RevProxyRoute
 
-toHTTPRequest :: Request -> RevProxyRoute -> Int64 -> H.Request IO
+toHTTPRequest :: Request -> RevProxyRoute -> Int64 -> H.Request (ResourceT IO)
 toHTTPRequest req route len = H.def {
     H.host = revProxyDomain route
   , H.port = revProxyPort route
@@ -50,10 +51,10 @@ toHTTPRequest req route len = H.def {
   where
     path = BC.concat $ map (BC.cons '/') $ map (BC.pack . T.unpack) $ revProxyDst route
 
-getBody :: Request -> Int64 -> H.RequestBody IO
+getBody :: Request -> Int64 -> H.RequestBody (ResourceT IO)
 getBody req len = H.RequestBodySource len (toBodySource req)
   where
-    toBodySource = (BB.fromByteString <$>) . requestBody
+    toBodySource r = requestBody r $= CL.map BB.fromByteString
 
 getLen :: Request -> Maybe Int64
 getLen req = do
@@ -78,21 +79,21 @@ revProxyApp' mgr route req = do
     let mlen = getLen req
         len = fromMaybe 0 mlen
         httpReq = toHTTPRequest req route len
-    H.Response status hdr downbody <- http httpReq mgr
+    H.Response status _ hdr downbody <- http httpReq mgr
     return $ ResponseSource status hdr $ sourceToSource downbody (contentType hdr)
   where
     contentType hdr = lookup "content-type" hdr
 
-type Resp = ResourceT IO (H.Response (Source IO BS.ByteString))
+type Resp = ResourceT IO (H.Response (Source (ResourceT IO) BS.ByteString))
 
-http :: H.Request IO -> H.Manager -> Resp
+http :: H.Request (ResourceT IO) -> H.Manager -> Resp
 http req mgr = H.http req mgr
 
-sourceToSource :: Source IO BS.ByteString -> Maybe BS.ByteString -> Source IO (Flush BB.Builder)
+sourceToSource :: Source (ResourceT IO) BS.ByteString -> Maybe BS.ByteString -> Source (ResourceT IO) (Flush BB.Builder)
 sourceToSource downbody (Just "text/event-stream") = downbody $= eventStreamConduit
-sourceToSource downbody _ = Chunk . BB.fromByteString <$> downbody
+sourceToSource downbody _ = downbody $= CL.map (Chunk . BB.fromByteString)
 
-eventStreamConduit :: Conduit BS.ByteString IO (Flush BB.Builder)
+eventStreamConduit :: Conduit BS.ByteString (ResourceT IO) (Flush BB.Builder)
 eventStreamConduit = conduitState "" push close
   where
     push rest input = return $ StateProducing (last xs) (concatMap conv $ init xs)
