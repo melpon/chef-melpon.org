@@ -1,8 +1,17 @@
 {
     "run_list":[
+        "recipe[swapfile]",
         "recipe[wandbox]"
     ],
-    "travis_build_environment": {
+    "swapfile": {
+        "size": 1048576
+    },
+    "haskell": {
+        "user": "wandbox",
+        "group": "wandbox",
+        "home": "/home/wandbox"
+    },
+    "wandbox": {
         "user": "wandbox",
         "group": "wandbox",
         "home": "/home/wandbox"

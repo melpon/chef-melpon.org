@@ -1,6 +1,3 @@
 [submodule "cookbooks/boost"]
 	path = cookbooks/boost
 	url = git://github.com/opscode-cookbooks/boost.git
-[submodule "cookbooks/haskell"]
-	path = cookbooks/haskell
-	url = git://github.com/michaelklishin/haskell-platform-chef-cookbook.git

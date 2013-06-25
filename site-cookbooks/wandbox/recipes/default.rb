@@ -6,56 +6,39 @@
 #
 # All rights reserved - Do Not Redistribute
 #
-user node.travis_build_environment.user do
-  action :create
-  home node.travis_build_environment.home
-  supports :manage_home => true
-  shell "/bin/bash"
-end
-
 include_recipe "boost"
 include_recipe "haskell"
-
-ruby_block "insert_line" do
-  block do
-    file = Chef::Util::FileEdit.new(node.travis_build_environment.home + "/.bashrc")
-    file.insert_line_if_no_match("/.cabal\\/bin/", "export PATH=$HOME/.cabal/bin:$PATH")
-    file.write_file
-  end
-end
 
 package "git" do
   action :install
 end
 
-script "install yesod" do
+script "install cabal-dev" do
   action :run
-  user node.travis_build_environment.user
-  group node.travis_build_environment.group
+  user node.wandbox.user
+  group node.wandbox.group
 
-  cwd node.travis_build_environment.home
-  environment Hash['HOME' => node.travis_build_environment.home]
+  cwd node.wandbox.home
+  environment Hash['HOME' => node.wandbox.home]
 
   interpreter "bash"
 
   code <<-SH
-  cabal update
-  cabal install yesod-platform-1.0.0 --force-reinstalls
+  cabal install cabal-dev
   SH
 end
 
-git node.travis_build_environment.home + "/wandbox" do
+git node.wandbox.home + "/wandbox" do
   repository "git://github.com/melpon/wandbox.git"
   action :sync
-  user node.travis_build_environment.user
-  group node.travis_build_environment.group
+  user node.wandbox.user
+  group node.wandbox.group
 end
 
 script "make cattleshed" do
   action :run
-  cwd node.travis_build_environment.home + "/wandbox/cattleshed"
-  user node.travis_build_environment.user
-  group node.travis_build_environment.group
+  cwd node.wandbox.home + "/wandbox/cattleshed"
+  user node.wandbox.user
 
   interpreter "bash"
 
@@ -66,26 +49,25 @@ end
 
 script "install kennel" do
   action :run
-  cwd node.travis_build_environment.home + "/wandbox/kennel"
-  user node.travis_build_environment.user
-  group node.travis_build_environment.group
+  cwd node.wandbox.home + "/wandbox/kennel"
+  user node.wandbox.user
 
   interpreter "bash"
 
   code <<-SH
-  cabal install
+  cabal-dev install yesod-platform-1.0.0 --force-reinstalls
+  cabal-dev install
   SH
 end
 
 script "run" do
   action :run
-  user node.travis_build_environment.user
-  group node.travis_build_environment.group
+  user node.wandbox.user
 
   code <<-SH
-  cd #{node.travis_build_environment.home + "/wandbox/cattleshed"}
+  cd #{node.wandbox.home + "/wandbox/cattleshed"}
   nohup ./server.exe &
-  cd #{node.travis_build_environment.home + "/wandbox/kennel"}
+  cd #{node.wandbox.home + "/wandbox/kennel"}
   nohup ./dist/bin/kennel Production &
   SH
 end
