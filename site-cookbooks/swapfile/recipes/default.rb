@@ -6,16 +6,25 @@
 #
 # All rights reserved - Do Not Redistribute
 #
-script "swapfile" do
-  action :run
+swapfile = "/swap.img"
 
-  code <<-SH
-    dd if=/dev/zero of=/swapfile1 bs=1024 count=#{node.swapfile.size}
-    mkswap /swapfile1
-    chmod 0600 /swapfile1
-    swapon /swapfile1
-    echo "/swapfile1 swap swap defaults 0 0" >> /etc/fstab
-  SH
+bash 'create swapfile' do
+  user 'root'
+  code <<-EOC
+    dd if=/dev/zero of=/swap.img bs=1M count=#{node.swapfile.size_mb} &&
+    chmod 600 "#{swapfile}"
+    mkswap "#{swapfile}"
+  EOC
+  only_if "test ! -f /swap.img -a `cat /proc/swaps | wc -l` -eq 1"
+end
 
-  not_if { ::File.exists?("/swapfile1") }
+mount '/dev/null' do # swap file entry for fstab
+  action :enable # cannot mount; only add to fstab
+  device swapfile
+  fstype 'swap'
+end
+
+bash 'activate swap' do
+  code 'swapon -ae'
+  only_if "test `cat /proc/swaps | wc -l` -eq 1"
 end

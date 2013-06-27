@@ -24,6 +24,7 @@ script "install cabal-dev" do
   interpreter "bash"
 
   code <<-SH
+  cabal update
   cabal install cabal-dev
   SH
 end

@@ -4,7 +4,7 @@
         "recipe[wandbox]"
     ],
     "swapfile": {
-        "size": 1048576
+        "size_mb": 1024
     },
     "haskell": {
         "user": "wandbox",
