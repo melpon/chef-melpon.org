@@ -9,6 +9,11 @@
 include_recipe "boost"
 include_recipe "haskell"
 
+case node['platform_family']
+when "debian"
+  package "libboost-system-dev"
+end
+
 package "git" do
   action :install
 end
