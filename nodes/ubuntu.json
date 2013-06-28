@@ -3,6 +3,17 @@
         "recipe[swapfile]",
         "recipe[wandbox]"
     ],
+    "build_essential": {
+        "compiletime": false
+    },
+    "boost": {
+        "source": "http://sourceforge.net/projects/boost/files/boost/1.47.0/",
+        "file": "boost_1_47_0.tar.gz",
+        "build_dir": "boost_1_47_0",
+        "prefix": "/usr/local/boost-1.47.0",
+        "bjam_flags": "--without-iostreams --without-python",
+        "update_bashrc": true
+    },
     "swapfile": {
         "size_mb": 1024
     },

@@ -6,10 +6,6 @@
 #
 # All rights reserved - Do Not Redistribute
 #
-cookbook_file "/etc/profile.d/cabal.sh" do
-  mode 0755
-end
-
 package "ghc" do
   action :install
 end
@@ -18,27 +14,28 @@ user node.haskell.user do
   action :create
   home node.haskell.home
   supports :manage_home => true
-end
-
-script "initialize cabal" do
-  interpreter "bash"
-  user node.haskell.user
-  cwd  node.haskell.home
-
-  environment Hash['HOME' => node.haskell.home]
-
-  code <<-SH
-  cabal update
-  SH
-
-  # triggered by haskell-platform installation
-  action :nothing
-  # until http://haskell.1045720.n5.nabble.com/Cabal-install-fails-due-to-recent-HUnit-tt5715081.html#none is resolved :( MK.
-  ignore_failure true
+  shell "/bin/bash"
 end
 
 package "haskell-platform" do
   action :install
+end
 
-  notifies :run, resources(:script => "initialize cabal")
+script "initialize cabal" do
+  action :run
+  interpreter "bash"
+
+  code <<-SH
+  su - #{node.haskell.user}
+  cabal update
+  SH
+
+  not_if "test -d #{node.haskell.home}/.cabal/"
+end
+
+file node.haskell.home + "/.bashrc" do
+  owner node.haskell.user
+  group node.haskell.group
+  action :create
+  content "export PATH=$HOME/.cabal/bin:$PATH"
 end
