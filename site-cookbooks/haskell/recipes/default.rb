@@ -21,9 +21,8 @@ package "haskell-platform" do
   action :install
 end
 
-script "initialize cabal" do
+bash "initialize cabal" do
   action :run
-  interpreter "bash"
 
   code <<-SH
   su - #{node.haskell.user}
@@ -33,9 +32,13 @@ script "initialize cabal" do
   not_if "test -d #{node.haskell.home}/.cabal/"
 end
 
-file node.haskell.home + "/.bashrc" do
-  owner node.haskell.user
-  group node.haskell.group
-  action :create
-  content "export PATH=$HOME/.cabal/bin:$PATH"
+bash "add path to cabal" do
+  action :run
+  user node.haskell.user
+
+  code <<-SH
+    echo 'export PATH=$HOME/.cabal/bin:$PATH' >> #{node.haskell.home + '/.profile'}
+  SH
+
+  not_if "grep -q '.cabal/bin' #{node.haskell.home + '/.profile'}"
 end

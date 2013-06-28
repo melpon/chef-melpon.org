@@ -9,29 +9,21 @@
 include_recipe "boost"
 include_recipe "haskell"
 
-case node['platform_family']
-when "debian"
-  package "libboost-system-dev"
-end
-
 package "git" do
   action :install
 end
 
-script "install cabal-dev" do
+bash "install cabal-dev" do
   action :run
-  user node.wandbox.user
-  group node.wandbox.group
-
-  cwd node.wandbox.home
-  environment Hash['HOME' => node.wandbox.home]
-
-  interpreter "bash"
 
   code <<-SH
+  su - #{node.wandbox.user} -c '
   cabal update
   cabal install cabal-dev
+  '
   SH
+
+  not_if "su - #{node.wandbox.user} -c 'test -e .cabal/bin/cabal-dev'"
 end
 
 git node.wandbox.home + "/wandbox" do
@@ -41,39 +33,42 @@ git node.wandbox.home + "/wandbox" do
   group node.wandbox.group
 end
 
-script "make cattleshed" do
+bash "make cattleshed" do
   action :run
-  cwd node.wandbox.home + "/wandbox/cattleshed"
-  user node.wandbox.user
-
-  interpreter "bash"
 
   code <<-SH
-  make
+  su - #{node.wandbox.user} -c '
+  cd wandbox/cattleshed
+  make || make || make || make || make
+  '
   SH
+
+  not_if "su - #{node.wandbox.user} -c 'test -e wandbox/cattleshed/server.exe'"
 end
 
-script "install kennel" do
+bash "install kennel" do
   action :run
-  cwd node.wandbox.home + "/wandbox/kennel"
-  user node.wandbox.user
-
-  interpreter "bash"
 
   code <<-SH
+  su - #{node.wandbox.user} -c '
+  source ~/.bashrc
+  cd wandbox/kennel
   cabal-dev install yesod-platform-1.0.0 --force-reinstalls
   cabal-dev install
+  '
   SH
+
+  not_if "su - #{node.wandbox.user} -c 'test -e wandbox/kennel/cabal-dev/bin/kennel'"
 end
 
-script "run" do
-  action :run
-  user node.wandbox.user
-
-  code <<-SH
-  cd #{node.wandbox.home + "/wandbox/cattleshed"}
-  nohup ./server.exe &
-  cd #{node.wandbox.home + "/wandbox/kennel"}
-  nohup ./dist/bin/kennel Production &
-  SH
-end
+#script "run" do
+#  action :run
+#  user node.wandbox.user
+#
+#  code <<-SH
+#  cd #{node.wandbox.home + "/wandbox/cattleshed"}
+#  nohup ./server.exe &
+#  cd #{node.wandbox.home + "/wandbox/kennel"}
+#  nohup ./dist/bin/kennel Production &
+#  SH
+#end
