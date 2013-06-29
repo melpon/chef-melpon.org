@@ -27,7 +27,7 @@ bash "clean-boost-dir" do
   only_if "test -d #{Chef::Config[:file_cache_path]}/#{node.boost.build_dir}"
 end
 
-if node.boost.update_bashrc then
+if node.boost.update_profile then
   file "/etc/profile.d/boost.sh" do
     mode "0755"
     content <<-SH

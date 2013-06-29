@@ -51,7 +51,6 @@ bash "install kennel" do
 
   code <<-SH
   su - #{node.wandbox.user} -c '
-  source ~/.bashrc
   cd wandbox/kennel
   cabal-dev install yesod-platform-1.0.0 --force-reinstalls
   cabal-dev install

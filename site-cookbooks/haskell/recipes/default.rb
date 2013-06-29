@@ -25,20 +25,22 @@ bash "initialize cabal" do
   action :run
 
   code <<-SH
-  su - #{node.haskell.user}
+  su - #{node.haskell.user} -c '
   cabal update
+  '
   SH
 
-  not_if "test -d #{node.haskell.home}/.cabal/"
+  not_if "su - #{node.haskell.user} -c 'test -d .cabal/'"
 end
 
 bash "add path to cabal" do
   action :run
-  user node.haskell.user
 
   code <<-SH
-    echo 'export PATH=$HOME/.cabal/bin:$PATH' >> #{node.haskell.home + '/.profile'}
+    su - #{node.haskell.user} -c "
+    echo 'export PATH=$HOME/.cabal/bin:$PATH' >> .profile
+    "
   SH
 
-  not_if "grep -q '.cabal/bin' #{node.haskell.home + '/.profile'}"
+  not_if "su - #{node.haskell.user} -c \"grep -q '.cabal/bin' '.profile'\""
 end
