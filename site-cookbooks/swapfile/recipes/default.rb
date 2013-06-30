@@ -11,7 +11,7 @@ swapfile = "/swap.img"
 bash 'create swapfile' do
   user 'root'
   code <<-EOC
-    dd if=/dev/zero of=/swap.img bs=1M count=#{node.swapfile.size_mb} &&
+    dd if=/dev/zero of=/swap.img bs=1K count=#{node.swapfile.size_kb} &&
     chmod 600 "#{swapfile}"
     mkswap "#{swapfile}"
   EOC

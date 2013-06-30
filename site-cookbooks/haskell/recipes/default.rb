@@ -38,7 +38,7 @@ bash "add path to cabal" do
 
   code <<-SH
     su - #{node.haskell.user} -c "
-    echo 'export PATH=$HOME/.cabal/bin:$PATH' >> .profile
+    echo 'export PATH=\\$HOME/.cabal/bin:\\$PATH' >> .profile
     "
   SH
 

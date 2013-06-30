@@ -1,7 +1,7 @@
 {
     "run_list":[
         "recipe[swapfile]",
-        "recipe[wandbox]"
+        "recipe[gcc]"
     ],
     "build_essential": {
         "compiletime": false
@@ -12,10 +12,10 @@
         "build_dir": "boost_1_47_0",
         "prefix": "/usr/local/boost-1.47.0",
         "bjam_flags": "--with-system",
-        "update_bashrc": true
+        "update_profile": true
     },
     "swapfile": {
-        "size_mb": 2048
+        "size_kb": 4194304
     },
     "haskell": {
         "user": "wandbox",

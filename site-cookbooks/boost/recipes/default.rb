@@ -13,18 +13,12 @@ bash "install-boost" do
   code <<-EOH
   tar xf #{node.boost.file}
   cd #{node.boost.build_dir}
-    ./bootstrap.sh && ./bjam install --prefix=#{node.boost.prefix} #{node.boost.bjam_flags} > /dev/null
+  ./bootstrap.sh
+  ./bjam install --prefix=#{node.boost.prefix} #{node.boost.bjam_flags} > /dev/null
+  cd ../
+  rm -r #{node.boost.build_dir}
   EOH
   not_if "test -d #{node.boost.prefix}"
-end
-
-bash "clean-boost-dir" do
-  user "root"
-  cwd Chef::Config[:file_cache_path]
-  code <<-SH
-    rm -r #{node.boost.build_dir}
-  SH
-  only_if "test -d #{Chef::Config[:file_cache_path]}/#{node.boost.build_dir}"
 end
 
 if node.boost.update_profile then
