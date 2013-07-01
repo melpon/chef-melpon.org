@@ -3,7 +3,7 @@
 url = "http://ftp.gnu.org/gnu/gmp/"
 file = "gmp-5.1.2.tar.bz2"
 build_dir = "gmp-5.1.2"
-prefix = "/usr/local"
+prefix = "/usr"
 lib = "gmp"
 
 remote_file "#{Chef::Config[:file_cache_path]}/#{file}" do
@@ -32,7 +32,7 @@ end
 url = "http://www.mpfr.org/mpfr-current/"
 file = "mpfr-3.1.2.tar.gz"
 build_dir = "mpfr-3.1.2"
-prefix = "/usr/local"
+prefix = "/usr"
 lib = "mpfr"
 
 remote_file "#{Chef::Config[:file_cache_path]}/#{file}" do
@@ -60,7 +60,7 @@ end
 url = "http://www.multiprecision.org/mpc/download/"
 file = "mpc-1.0.1.tar.gz"
 build_dir = "mpc-1.0.1"
-prefix = "/usr/local"
+prefix = "/usr"
 lib = "mpc"
 
 remote_file "#{Chef::Config[:file_cache_path]}/#{file}" do
@@ -85,3 +85,6 @@ bash "install-#{build_dir}" do
   not_if "test -e #{prefix}/lib/lib#{lib}.a"
 end
 
+package "gcc-multilib" do
+  action :install
+end

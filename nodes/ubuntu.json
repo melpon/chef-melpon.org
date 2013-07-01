@@ -6,6 +6,13 @@
     "build_essential": {
         "compiletime": false
     },
+    "gcc": {
+        "source": "http://ftp.tsukuba.wide.ad.jp/software/gcc/releases/gcc-4.5.4/",
+        "file": "gcc-4.5.4.tar.gz",
+        "build_dir": "gcc-4.5.4",
+        "prefix": "/usr/local/gcc-4.5.4",
+        "gcc_flags": "--enable-languages=c,c++ --disable-multilib --without-ppl --without-cloog-ppl --enable-checking=release --disable-nls"
+    },
     "boost": {
         "source": "http://sourceforge.net/projects/boost/files/boost/1.47.0/",
         "file": "boost_1_47_0.tar.gz",

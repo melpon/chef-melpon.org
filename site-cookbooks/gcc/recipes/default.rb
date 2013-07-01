@@ -5,7 +5,7 @@ remote_file "#{Chef::Config[:file_cache_path]}/#{node.gcc.file}" do
   source node.gcc.source + node.gcc.file
   mode "0644"
   action :create_if_missing
-  not_if "test -d #{node.gcc.prefix}"
+  not_if "test -e #{node.gcc.prefix}/bin/gcc"
 end
 
 bash "install-gcc" do
@@ -19,6 +19,7 @@ bash "install-gcc" do
   mkdir #{node.gcc.build_dir}_build
   cd #{node.gcc.build_dir}_build
 
+  export LIBRARY_PATH=/usr/lib/x86_64-linux-gnu
   ../#{node.gcc.build_dir}/configure --prefix=#{node.gcc.prefix} #{node.gcc.gcc_flags}
   make -j2 >log 2>err
   make install
@@ -27,5 +28,5 @@ bash "install-gcc" do
   rm -r #{node.gcc.build_dir}_build
   rm -r #{node.gcc.build_dir}
   EOH
-  not_if "test -d #{node.gcc.prefix}"
+  not_if "test -e #{node.gcc.prefix}/bin/gcc"
 end
