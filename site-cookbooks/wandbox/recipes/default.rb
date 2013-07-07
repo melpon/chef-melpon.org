@@ -82,7 +82,7 @@ end
 bash "run cattleshed" do
   action :nothing
   user "root"
-  code "start cattleshed"
+  code "source /etc/profile && start cattleshed LD_LIBRARY_PATH=$LD_LIBRARY_PATH"
 end
 
 cookbook_file "/etc/init/cattleshed.conf" do

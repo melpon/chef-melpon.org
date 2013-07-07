@@ -23,7 +23,7 @@ bash "install mighttpd" do
   '
   SH
 
-  not_if "su - mighttpd -c 'test -e .cabal/bin/mighttpd'"
+  not_if "su - mighttpd -c 'test -e .cabal/bin/mighty'"
 end
 
 cookbook_file "/etc/init/mighttpd.conf" do
@@ -45,7 +45,7 @@ cookbook_file "/home/mighttpd/mighttpd.server.conf" do
   group 'mighttpd'
   mode '0644'
 
-  notifies :run, "bash[run kennel]", :immediately
+  notifies :run, "bash[run mighttpd]", :immediately
 end
 
 cookbook_file "/home/mighttpd/mighttpd.server.route" do

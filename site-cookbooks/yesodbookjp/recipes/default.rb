@@ -62,7 +62,7 @@ bash "install yesodbookjp" do
   '
   SH
 
-  not_if "su - yesodbookjp -c 'test -e yesodbookjp/cabal-dev/bin/kennel'"
+  not_if "su - yesodbookjp -c 'test -e yesodbookjp/cabal-dev/bin/yesodbookjp'"
 end
 
 bash "run yesodbookjp" do

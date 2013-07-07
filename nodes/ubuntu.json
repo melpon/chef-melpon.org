@@ -1,7 +1,9 @@
 {
     "run_list":[
         "recipe[swapfile]",
-        "recipe[wandbox]"
+        "recipe[wandbox]",
+        "recipe[yesodbookjp]",
+        "recipe[mighttpd]"
     ],
     "build_essential": {
         "compiletime": false
@@ -16,20 +18,5 @@
     },
     "swapfile": {
         "size_kb": 4194304
-    },
-    "haskell": {
-        "user": "wandbox",
-        "group": "wandbox",
-        "home": "/home/wandbox"
-    },
-    "mighttpd": {
-        "user": "wandbox",
-        "group": "wandbox",
-        "home": "/home/wandbox"
-    },
-    "wandbox": {
-        "user": "wandbox",
-        "group": "wandbox",
-        "home": "/home/wandbox"
     }
 }
