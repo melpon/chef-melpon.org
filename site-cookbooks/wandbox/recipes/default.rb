@@ -9,6 +9,25 @@
 include_recipe "boost"
 include_recipe "haskell"
 
+user "wandbox" do
+  action :create
+  home "/home/wandbox"
+  supports :manage_home => true
+  shell "/bin/bash"
+end
+
+bash "add path to cabal" do
+  action :run
+
+  code <<-SH
+    su - wandbox -c "
+    echo 'export PATH=\\$HOME/.cabal/bin:\\$PATH' >> .profile
+    "
+  SH
+
+  not_if "su - wandbox -c \"grep -q '.cabal/bin' '.profile'\""
+end
+
 package "git" do
   action :install
 end
@@ -17,57 +36,65 @@ bash "install cabal-dev" do
   action :run
 
   code <<-SH
-  su - #{node.wandbox.user} -c '
+  su - wandbox -c '
   cabal update
   cabal install cabal-dev
   '
   SH
 
-  not_if "su - #{node.wandbox.user} -c 'test -e .cabal/bin/cabal-dev'"
+  not_if "su - wandbox -c 'test -e .cabal/bin/cabal-dev'"
 end
 
-git node.wandbox.home + "/wandbox" do
+git "/home/wandbox/wandbox" do
   repository "git://github.com/melpon/wandbox.git"
   action :sync
-  user node.wandbox.user
-  group node.wandbox.group
+  user "wandbox"
+  group "wandbox"
 end
 
 bash "make cattleshed" do
   action :run
 
   code <<-SH
-  su - #{node.wandbox.user} -c '
+  su - wandbox -c '
   cd wandbox/cattleshed
   make || make || make || make || make
   '
   SH
 
-  not_if "su - #{node.wandbox.user} -c 'test -e wandbox/cattleshed/server.exe'"
+  not_if "su - wandbox -c 'test -e wandbox/cattleshed/server.exe'"
 end
 
 bash "install kennel" do
   action :run
 
   code <<-SH
-  su - #{node.wandbox.user} -c '
+  su - wandbox -c '
   cd wandbox/kennel
   cabal-dev install yesod-platform-1.0.0 --force-reinstalls
   cabal-dev install
   '
   SH
 
-  not_if "su - #{node.wandbox.user} -c 'test -e wandbox/kennel/cabal-dev/bin/kennel'"
+  not_if "su - wandbox -c 'test -e wandbox/kennel/cabal-dev/bin/kennel'"
 end
 
-#script "run" do
-#  action :run
-#  user node.wandbox.user
-#
-#  code <<-SH
-#  cd #{node.wandbox.home + "/wandbox/cattleshed"}
-#  nohup ./server.exe &
-#  cd #{node.wandbox.home + "/wandbox/kennel"}
-#  nohup ./dist/bin/kennel Production &
-#  SH
-#end
+bash "run cattleshed" do
+  action :nothing
+  user "root"
+  code "start cattleshed"
+end
+
+cookbook_file "/etc/init/cattleshed.conf" do
+  notifies :run, "bash[run cattleshed]", :immediately
+end
+
+bash "run kennel" do
+  action :nothing
+  user "root"
+  code "start kennel"
+end
+
+cookbook_file "/etc/init/kennel.conf" do
+  notifies :run, "bash[run kennel]", :immediately
+end
