@@ -30,7 +30,7 @@ class ::Chef::Provider::Git
       args << "-o #{remote}" unless remote == 'origin'
       args << "--depth #{@new_resource.depth}" if @new_resource.depth
 
-      timeout = 10000 # i believe these are seconds
+      timeout = 100000 # i believe these are seconds
 
       Chef::Log.info "#{@new_resource} cloning repo #{@new_resource.repository} to #{@new_resource.destination} with timeout #{timeout}"
 

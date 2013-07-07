@@ -4,3 +4,9 @@
 [submodule "cookbooks/python"]
 	path = cookbooks/python
 	url = git@github.com:opscode-cookbooks/python.git
+[submodule "cookbooks/yum"]
+	path = cookbooks/yum
+	url = https://github.com/opscode-cookbooks/yum
+[submodule "cookbooks/ssh"]
+	path = cookbooks/ssh
+	url = https://github.com/markolson/chef-ssh

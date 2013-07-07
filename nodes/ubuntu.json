@@ -1,8 +1,7 @@
 {
     "run_list":[
         "recipe[swapfile]",
-        "recipe[gcc]",
-        "recipe[gcc::gcc-head]"
+        "recipe[andare]"
     ],
     "build_essential": {
         "compiletime": false
