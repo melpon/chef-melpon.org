@@ -6,17 +6,18 @@
 #
 # All rights reserved - Do Not Redistribute
 #
-include_recipe "boost"
-include_recipe "haskell"
+include_recipe 'boost'
+include_recipe 'haskell'
+include_recipe 'git'
 
-user "wandbox" do
+user 'wandbox' do
   action :create
-  home "/home/wandbox"
+  home '/home/wandbox'
   supports :manage_home => true
-  shell "/bin/bash"
+  shell '/bin/bash'
 end
 
-bash "add path to cabal" do
+bash 'add path to cabal' do
   action :run
 
   code <<-SH
@@ -28,11 +29,7 @@ bash "add path to cabal" do
   not_if "su - wandbox -c \"grep -q '.cabal/bin' '.profile'\""
 end
 
-package "git" do
-  action :install
-end
-
-bash "install cabal-dev" do
+bash 'install cabal-dev' do
   action :run
 
   code <<-SH
@@ -45,14 +42,14 @@ bash "install cabal-dev" do
   not_if "su - wandbox -c 'test -e .cabal/bin/cabal-dev'"
 end
 
-git "/home/wandbox/wandbox" do
-  repository "git://github.com/melpon/wandbox.git"
+git '/home/wandbox/wandbox' do
+  repository 'git://github.com/melpon/wandbox.git'
   action :sync
-  user "wandbox"
-  group "wandbox"
+  user 'wandbox'
+  group 'wandbox'
 end
 
-bash "make cattleshed" do
+bash 'make cattleshed' do
   action :run
 
   code <<-SH
@@ -65,7 +62,7 @@ bash "make cattleshed" do
   not_if "su - wandbox -c 'test -e wandbox/cattleshed/server.exe'"
 end
 
-bash "install kennel" do
+bash 'install kennel' do
   action :run
 
   code <<-SH
@@ -79,30 +76,30 @@ bash "install kennel" do
   not_if "su - wandbox -c 'test -e wandbox/kennel/cabal-dev/bin/kennel'"
 end
 
-bash "run cattleshed" do
+bash 'run cattleshed' do
   action :nothing
-  user "root"
-  code "source /etc/profile && start cattleshed LD_LIBRARY_PATH=$LD_LIBRARY_PATH"
+  user 'root'
+  code 'source /etc/profile && start cattleshed LD_LIBRARY_PATH=$LD_LIBRARY_PATH'
 end
 
-cookbook_file "/etc/init/cattleshed.conf" do
+cookbook_file '/etc/init/cattleshed.conf' do
   user 'root'
   group 'root'
   mode '0644'
 
-  notifies :run, "bash[run cattleshed]", :immediately
+  notifies :run, 'bash[run cattleshed]', :immediately
 end
 
-bash "run kennel" do
+bash 'run kennel' do
   action :nothing
-  user "root"
-  code "start kennel"
+  user 'root'
+  code 'start kennel'
 end
 
-cookbook_file "/etc/init/kennel.conf" do
+cookbook_file '/etc/init/kennel.conf' do
   user 'root'
   group 'root'
   mode '0644'
 
-  notifies :run, "bash[run kennel]", :immediately
+  notifies :run, 'bash[run kennel]', :immediately
 end

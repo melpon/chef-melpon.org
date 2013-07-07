@@ -1,5 +1,6 @@
 include_recipe 'build-essential'
 include_recipe 'gcc::depends'
+include_recipe 'git'
 
 build_user = 'gccbuilder'
 build_home = '/home/' + build_user
@@ -13,10 +14,6 @@ user build_user do
   home build_home
   supports :manage_home => true
   shell '/bin/bash'
-end
-
-package 'git' do
-  action :install
 end
 
 # Download from: https://gist.github.com/mikesmullin/5660466

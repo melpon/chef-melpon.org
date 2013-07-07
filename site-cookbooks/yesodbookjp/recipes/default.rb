@@ -6,16 +6,17 @@
 #
 # All rights reserved - Do Not Redistribute
 #
-include_recipe "haskell"
+include_recipe 'haskell'
+include_recipe 'git'
 
-user "yesodbookjp" do
+user 'yesodbookjp' do
   action :create
-  home "/home/yesodbookjp"
+  home '/home/yesodbookjp'
   supports :manage_home => true
-  shell "/bin/bash"
+  shell '/bin/bash'
 end
 
-bash "add path to cabal" do
+bash 'add path to cabal' do
   action :run
 
   code <<-SH
@@ -27,11 +28,7 @@ bash "add path to cabal" do
   not_if "su - yesodbookjp -c \"grep -q '.cabal/bin' '.profile'\""
 end
 
-package "git" do
-  action :install
-end
-
-bash "install cabal-dev" do
+bash 'install cabal-dev' do
   action :run
 
   code <<-SH
@@ -44,14 +41,14 @@ bash "install cabal-dev" do
   not_if "su - yesodbookjp -c 'test -e .cabal/bin/cabal-dev'"
 end
 
-git "/home/yesodbookjp/yesodbookjp" do
-  repository "git://github.com/melpon/yesodbookjp.git"
+git '/home/yesodbookjp/yesodbookjp' do
+  repository 'git://github.com/melpon/yesodbookjp.git'
   action :sync
-  user "yesodbookjp"
-  group "yesodbookjp"
+  user 'yesodbookjp'
+  group 'yesodbookjp'
 end
 
-bash "install yesodbookjp" do
+bash 'install yesodbookjp' do
   action :run
 
   code <<-SH
@@ -65,16 +62,16 @@ bash "install yesodbookjp" do
   not_if "su - yesodbookjp -c 'test -e yesodbookjp/cabal-dev/bin/yesodbookjp'"
 end
 
-bash "run yesodbookjp" do
+bash 'run yesodbookjp' do
   action :nothing
-  user "root"
-  code "start yesodbookjp"
+  user 'root'
+  code 'start yesodbookjp'
 end
 
-cookbook_file "/etc/init/yesodbookjp.conf" do
+cookbook_file '/etc/init/yesodbookjp.conf' do
   user 'root'
   group 'root'
   mode '0644'
 
-  notifies :run, "bash[run yesodbookjp]", :immediately
+  notifies :run, 'bash[run yesodbookjp]', :immediately
 end

@@ -1,3 +1,6 @@
 [submodule "cookbooks/build-essential"]
 	path = cookbooks/build-essential
 	url = git@github.com:opscode-cookbooks/build-essential.git
+[submodule "cookbooks/python"]
+	path = cookbooks/python
+	url = git@github.com:opscode-cookbooks/python.git
