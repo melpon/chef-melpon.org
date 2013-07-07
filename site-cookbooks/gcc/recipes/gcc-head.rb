@@ -1,21 +1,21 @@
-include_recipe "build-essential"
-include_recipe "gcc::depends"
+include_recipe 'build-essential'
+include_recipe 'gcc::depends'
 
-build_user = "gccbuilder"
-build_home = "/home/" + build_user
-build_sh = build_home + "/build.sh"
-build_gcc = build_home + "/gcc"
-build_dir = build_home + "/build"
-git_repo = "git://gcc.gnu.org/git/gcc.git"
+build_user = 'gccbuilder'
+build_home = '/home/' + build_user
+build_sh = build_home + '/build.sh'
+build_gcc = build_home + '/gcc'
+build_dir = build_home + '/build'
+git_repo = node['gcc_head']['repository']
 
 user build_user do
   action :create
   home build_home
   supports :manage_home => true
-  shell "/bin/bash"
+  shell '/bin/bash'
 end
 
-package "git" do
+package 'git' do
   action :install
 end
 
@@ -46,18 +46,16 @@ end
 git build_gcc do
   repository git_repo
   action :sync
-  user "gccbuilder"
-  group "gccbuilder"
+  user 'gccbuilder'
+  group 'gccbuilder'
 end
 
 file build_sh do
-  mode "0755"
-  user "root"
-  group "root"
+  mode '0755'
+  user 'root'
+  group 'root'
   content <<-SH
-  echo "test"
   set -e
-  echo "test2"
   cd #{build_gcc}
   sudo -u gccbuilder git checkout master
   sudo -u gccbuilder git pull --rebase
@@ -66,24 +64,24 @@ file build_sh do
   sudo -u gccbuilder mkdir #{build_dir}
   cd #{build_dir}
 
-  sudo -u gccbuilder #{build_gcc}/configure --prefix=#{node["gcc-head"]["prefix"]} #{node["gcc-head"]["flags"]}
+  sudo -u gccbuilder #{build_gcc}/configure --prefix=#{node['gcc_head']['prefix']} #{node['gcc_head']['flags']}
   sudo -u gccbuilder nice make -j2
   make install
   SH
 end
 
 # build gcc-head every day
-cron "update_gcc_head" do
+cron 'update_gcc_head' do
   action :create
-  minute "0"
-  hour "4"
+  minute '0'
+  hour '4'
   command build_sh
 end
 
 # test building
-bash "test building gcc-head" do
+bash 'test building gcc-head' do
   action :run
-  user "root"
+  user 'root'
   code build_sh
-  not_if "test -e #{node["gcc-head"]["prefix"] + "/bin/gcc"}"
+  not_if "test -e #{node['gcc_head']['prefix'] + '/bin/gcc'}"
 end
