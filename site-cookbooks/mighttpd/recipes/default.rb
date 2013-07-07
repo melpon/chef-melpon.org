@@ -34,12 +34,18 @@ cookbook_file "/etc/init/mighttpd.conf" do
   mode '0644'
 end
 
-cookbook_file "/home/mighttpd/mighttpd.server.conf" do
-  action :create
+bash "run mighttpd" do
+  action :nothing
+  user "root"
+  code "start mighttpd"
+end
 
+cookbook_file "/home/mighttpd/mighttpd.server.conf" do
   user 'mighttpd'
   group 'mighttpd'
   mode '0644'
+
+  notifies :run, "bash[run kennel]", :immediately
 end
 
 cookbook_file "/home/mighttpd/mighttpd.server.route" do

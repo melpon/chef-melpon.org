@@ -86,6 +86,10 @@ bash "run cattleshed" do
 end
 
 cookbook_file "/etc/init/cattleshed.conf" do
+  user 'root'
+  group 'root'
+  mode '0644'
+
   notifies :run, "bash[run cattleshed]", :immediately
 end
 
@@ -96,5 +100,9 @@ bash "run kennel" do
 end
 
 cookbook_file "/etc/init/kennel.conf" do
+  user 'root'
+  group 'root'
+  mode '0644'
+
   notifies :run, "bash[run kennel]", :immediately
 end

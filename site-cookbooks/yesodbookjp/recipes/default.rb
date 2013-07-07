@@ -72,5 +72,9 @@ bash "run yesodbookjp" do
 end
 
 cookbook_file "/etc/init/yesodbookjp.conf" do
+  user 'root'
+  group 'root'
+  mode '0644'
+
   notifies :run, "bash[run yesodbookjp]", :immediately
 end

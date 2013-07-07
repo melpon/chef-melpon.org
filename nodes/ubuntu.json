@@ -1,8 +1,7 @@
 {
     "run_list":[
         "recipe[swapfile]",
-        "recipe[haskell]",
-        "recipe[mighttpd]"
+        "recipe[wandbox]"
     ],
     "build_essential": {
         "compiletime": false
