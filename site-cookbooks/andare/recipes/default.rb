@@ -41,11 +41,19 @@ directory '/home/andare/cpprefjp' do
   group 'andare'
 end
 
-git '/home/andare/cpprefjp/site' do
-  repository 'https://github.com/cpprefjp/site.git'
-  action :sync
-  user 'andare'
-  group 'andare'
+bash 'git clone cpprefjp/site' do
+  action :run
+  code <<-SH
+  set -e
+  sudo su - andare -c '
+  cd cpprefjp
+  git clone https://github.com/cpprefjp/site.git
+  cd site
+  git branch fetched
+  git reset --hard #{node['andare']['revision']}
+  '
+  SH
+  not_if 'test -d /home/andare/cpprefjp/site/.git'
 end
 
 %w{
@@ -58,4 +66,18 @@ end
   python_pip pkg do
     virtualenv '/home/andare/venv'
   end
+end
+
+bash 'run andare' do
+  action :nothing
+  user 'root'
+  code 'start andare'
+end
+
+cookbook_file '/etc/init/andare.conf' do
+  user 'root'
+  group 'root'
+  mode '0644'
+
+  notifies :run, 'bash[run andare]', :immediately
 end

@@ -1,7 +1,12 @@
 {
     "run_list":[
         "recipe[swapfile]",
-        "recipe[andare]"
+        "recipe[wandbox]",
+        "recipe[yesodbookjp]",
+        "recipe[andare]",
+        "recipe[mighttpd]",
+        "recipe[gcc]",
+        "recipe[gcc::gcc-head]"
     ],
     "build_essential": {
         "compiletime": false
