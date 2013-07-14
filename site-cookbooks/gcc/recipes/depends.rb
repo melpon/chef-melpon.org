@@ -52,3 +52,9 @@ install(url, file, build_dir, prefix, lib)
 package 'gcc-multilib' do
   action :install
 end
+
+bash 'symbolic link to lib64' do
+  user 'root'
+  code 'ln -s /usr/lib/x86_64-linux-gnu /usr/lib64'
+  not_if "test -e /usr/lib64"
+end
