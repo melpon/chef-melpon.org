@@ -93,7 +93,7 @@ end
 cron 'kill_cattleshed_processes' do
   action :create
   minute '*'
-  command "ps -u wandbox --no-headers -o '%p %x %a' | grep 'prog.exe' | grep -v ' 00:00:' | awk '{ print $1;}' | xargs kill -KILL"
+  command "ps -u wandbox --no-headers -o '\\%p \\%x \\%a' | grep 'prog.exe' | grep -v ' 00:00:' | awk '{ print $1;}' | xargs kill -KILL"
 end
 
 bash 'run kennel' do
