@@ -17,7 +17,7 @@ user 'wandbox' do
   shell '/bin/bash'
 end
 
-bash 'add path to cabal' do
+bash 'add path to wandbox' do
   action :run
 
   code <<-SH
@@ -29,7 +29,7 @@ bash 'add path to cabal' do
   not_if "su - wandbox -c \"grep -q '.cabal/bin' '.profile'\""
 end
 
-bash 'install cabal-dev' do
+bash 'install cabal-dev to wandbox' do
   action :run
 
   code <<-SH

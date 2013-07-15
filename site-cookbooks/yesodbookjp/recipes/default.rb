@@ -16,7 +16,7 @@ user 'yesodbookjp' do
   shell '/bin/bash'
 end
 
-bash 'add path to cabal' do
+bash 'add path to yesodbookjp' do
   action :run
 
   code <<-SH
@@ -28,7 +28,7 @@ bash 'add path to cabal' do
   not_if "su - yesodbookjp -c \"grep -q '.cabal/bin' '.profile'\""
 end
 
-bash 'install cabal-dev' do
+bash 'install cabal-dev to yesodbookjp' do
   action :run
 
   code <<-SH
