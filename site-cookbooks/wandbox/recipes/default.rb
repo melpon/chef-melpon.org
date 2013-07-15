@@ -6,8 +6,6 @@
 #
 # All rights reserved - Do Not Redistribute
 #
-include_recipe 'boost'
-include_recipe 'haskell'
 include_recipe 'git'
 
 user 'wandbox' do
@@ -16,6 +14,22 @@ user 'wandbox' do
   supports :manage_home => true
   shell '/bin/bash'
 end
+
+git '/home/wandbox/wandbox' do
+  repository 'git://github.com/melpon/wandbox.git'
+  action :sync
+  enable_submodules true
+  user 'wandbox'
+  group 'wandbox'
+end
+
+
+
+######################
+# for kennel
+######################
+
+include_recipe 'haskell'
 
 bash 'add path to wandbox' do
   action :run
@@ -42,12 +56,42 @@ bash 'install cabal-dev to wandbox' do
   not_if "su - wandbox -c 'test -e .cabal/bin/cabal-dev'"
 end
 
-git '/home/wandbox/wandbox' do
-  repository 'git://github.com/melpon/wandbox.git'
-  action :sync
-  user 'wandbox'
-  group 'wandbox'
+bash 'install kennel' do
+  action :run
+
+  code <<-SH
+  su - wandbox -c '
+  cd wandbox/kennel/static
+  ln -s ../../submodules/ace-builds/src-min ace
+  cd ../
+  cabal-dev install yesod-platform-1.0.0 --force-reinstalls
+  cabal-dev install
+  '
+  SH
+
+  not_if "su - wandbox -c 'test -e wandbox/kennel/cabal-dev/bin/kennel'"
 end
+
+bash 'run kennel' do
+  action :nothing
+  user 'root'
+  code 'start kennel'
+end
+
+cookbook_file '/etc/init/kennel.conf' do
+  user 'root'
+  group 'root'
+  mode '0644'
+
+  notifies :run, 'bash[run kennel]', :immediately
+end
+
+
+######################
+# for cattleshed
+######################
+
+include_recipe 'boost'
 
 bash 'make cattleshed' do
   action :run
@@ -60,20 +104,6 @@ bash 'make cattleshed' do
   SH
 
   not_if "su - wandbox -c 'test -e wandbox/cattleshed/server.exe'"
-end
-
-bash 'install kennel' do
-  action :run
-
-  code <<-SH
-  su - wandbox -c '
-  cd wandbox/kennel
-  cabal-dev install yesod-platform-1.0.0 --force-reinstalls
-  cabal-dev install
-  '
-  SH
-
-  not_if "su - wandbox -c 'test -e wandbox/kennel/cabal-dev/bin/kennel'"
 end
 
 bash 'run cattleshed' do
@@ -96,16 +126,3 @@ cron 'kill_cattleshed_processes' do
   command "ps -u wandbox --no-headers -o '\\%p \\%x \\%a' | grep 'prog.exe' | grep -v ' 00:00:' | awk '{ print $1;}' | xargs kill -KILL"
 end
 
-bash 'run kennel' do
-  action :nothing
-  user 'root'
-  code 'start kennel'
-end
-
-cookbook_file '/etc/init/kennel.conf' do
-  user 'root'
-  group 'root'
-  mode '0644'
-
-  notifies :run, 'bash[run kennel]', :immediately
-end
