@@ -43,8 +43,8 @@ end
 git build_gcc do
   repository git_repo
   action :sync
-  user 'gccbuilder'
-  group 'gccbuilder'
+  user build_user
+  group build_user
 end
 
 file build_sh do
@@ -54,15 +54,15 @@ file build_sh do
   content <<-SH
   set -e
   cd #{build_gcc}
-  sudo -u gccbuilder git checkout master
-  sudo -u gccbuilder git pull --rebase
+  sudo -u #{build_user} git checkout master
+  sudo -u #{build_user} git pull --rebase
 
-  sudo -u gccbuilder rm -rf #{build_dir}
-  sudo -u gccbuilder mkdir #{build_dir}
+  sudo -u #{build_user} rm -rf #{build_dir}
+  sudo -u #{build_user} mkdir #{build_dir}
   cd #{build_dir}
 
-  sudo -u gccbuilder #{build_gcc}/configure --prefix=#{node['gcc_head']['prefix']} #{node['gcc_head']['flags']}
-  sudo -u gccbuilder nice make -j2
+  sudo -u #{build_user} #{build_gcc}/configure --prefix=#{node['gcc_head']['prefix']} #{node['gcc_head']['flags']}
+  sudo -u #{build_user} nice make -j2
   make install
   SH
 end

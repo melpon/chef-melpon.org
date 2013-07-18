@@ -6,7 +6,9 @@
         "recipe[yesodbookjp]",
         "recipe[mighttpd]",
         "recipe[gcc]",
-        "recipe[gcc::gcc-head]"
+        "recipe[gcc::gcc-head]",
+        "recipe[clang]",
+        "recipe[clang::clang-head]"
     ],
     "build_essential": {
         "compiletime": false
