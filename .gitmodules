@@ -10,3 +10,6 @@
 [submodule "cookbooks/ssh"]
 	path = cookbooks/ssh
 	url = https://github.com/markolson/chef-ssh
+[submodule "cookbooks/ruby_build"]
+	path = cookbooks/ruby_build
+	url = https://github.com/fnichol/chef-ruby_build.git

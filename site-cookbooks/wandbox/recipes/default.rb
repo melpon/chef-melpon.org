@@ -105,7 +105,7 @@ bash 'make cattleshed' do
   '
   SH
 
-  not_if "su - wandbox -c 'test -e wandbox/cattleshed/server.exe'"
+  not_if "su - wandbox -c 'test -e wandbox/cattleshed/src/server.exe'"
 end
 
 bash 'run cattleshed' do

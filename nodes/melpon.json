@@ -9,7 +9,8 @@
         "recipe[gcc::gcc-head]",
         "recipe[clang]",
         "recipe[clang::clang-head]",
-        "recipe[python::source]"
+        "recipe[python::source]",
+        "recipe[ruby]"
     ],
     "build_essential": {
         "compiletime": false
