@@ -10,7 +10,8 @@
         "recipe[clang]",
         "recipe[clang::clang-head]",
         "recipe[python::source]",
-        "recipe[ruby]"
+        "recipe[ruby]",
+        "recipe[perl]"
     ],
     "build_essential": {
         "compiletime": false

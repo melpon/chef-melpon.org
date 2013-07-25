@@ -13,7 +13,6 @@ def install_gcc(source, file, build_dir, prefix, flags)
     user 'root'
     cwd Chef::Config[:file_cache_path]
     code <<-EOH
-    cd #{Chef::Config[:file_cache_path]}
     tar xf #{file}
   
     set -e
