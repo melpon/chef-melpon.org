@@ -11,6 +11,7 @@ bash "install-boost" do
   user "root"
   cwd Chef::Config[:file_cache_path]
   code <<-EOH
+  set -e
   tar xf #{node.boost.file}
   cd #{node.boost.build_dir}
   ./bootstrap.sh

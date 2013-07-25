@@ -8,7 +8,8 @@
         "recipe[gcc]",
         "recipe[gcc::gcc-head]",
         "recipe[clang]",
-        "recipe[clang::clang-head]"
+        "recipe[clang::clang-head]",
+        "recipe[python::source]"
     ],
     "build_essential": {
         "compiletime": false
@@ -18,8 +19,13 @@
         "file": "boost_1_47_0.tar.gz",
         "build_dir": "boost_1_47_0",
         "prefix": "/usr/local/boost-1.47.0",
-        "bjam_flags": "--with-system",
+        "bjam_flags": "--with-system --with-program_options",
         "update_profile": true
+    },
+    "python": {
+        "prefix_dir": "/usr/local/python-2.7.3",
+        "version": "2.7.3",
+        "checksum": null
     },
     "swapfile": {
         "size_kb": 4194304

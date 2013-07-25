@@ -92,6 +92,7 @@ end
 ######################
 
 include_recipe 'boost'
+include_recipe 'realpath'
 
 bash 'make cattleshed' do
   action :run
@@ -99,7 +100,8 @@ bash 'make cattleshed' do
   code <<-SH
   su - wandbox -c '
   cd wandbox/cattleshed
-  make || make || make || make || make
+  ./configure
+  make
   '
   SH
 
