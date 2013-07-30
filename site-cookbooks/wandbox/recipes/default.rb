@@ -64,7 +64,7 @@ bash 'install kennel' do
   cd wandbox/kennel/static
   ln -s ../../submodules/ace-builds/src-min ace
   cd ../
-  cabal-dev install yesod-platform-1.0.0 --force-reinstalls
+  cabal-dev install yesod-platform-1.2.3 --force-reinstalls
   cabal-dev install
   '
   SH
