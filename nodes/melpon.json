@@ -12,7 +12,8 @@
         "recipe[python::source]",
         "recipe[ruby]",
         "recipe[perl]",
-        "recipe[erlang::erlang-maint]"
+        "recipe[erlang::erlang-maint]",
+        "recipe[ghc]"
     ],
     "build_essential": {
         "compiletime": false
