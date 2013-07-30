@@ -7,12 +7,12 @@
 # All rights reserved - Do Not Redistribute
 #
 
-def install_perl(source, file, build_dir, prefix, configure_flags)
+def install_perl(source, file, build_dir, prefix, configure_flags, binary)
   remote_file "#{Chef::Config[:file_cache_path]}/#{file}" do
     source source + file
     mode '0644'
     action :create_if_missing
-    not_if "test -e #{prefix}/bin/perl"
+    not_if "test -e #{prefix}/bin/#{binary}"
   end
 
   bash "install-#{build_dir}" do
@@ -30,9 +30,9 @@ def install_perl(source, file, build_dir, prefix, configure_flags)
     cd ../
     rm -r #{build_dir}
     EOH
-    not_if "test -e #{prefix}/bin/perl"
+    not_if "test -e #{prefix}/bin/#{binary}"
   end
 end
 
-install_perl('http://www.cpan.org/src/5.0/', 'perl-5.18.0.tar.gz', 'perl-5.18.0', '/usr/local/perl-5.18.0', '')
-install_perl('http://www.cpan.org/src/5.0/', 'perl-5.19.2.tar.gz', 'perl-5.19.2', '/usr/local/perl-5.19.2', '-Dusedevel')
+install_perl('http://www.cpan.org/src/5.0/', 'perl-5.18.0.tar.gz', 'perl-5.18.0', '/usr/local/perl-5.18.0', '', 'perl')
+install_perl('http://www.cpan.org/src/5.0/', 'perl-5.19.2.tar.gz', 'perl-5.19.2', '/usr/local/perl-5.19.2', '-Dusedevel', 'perl5.19.2')

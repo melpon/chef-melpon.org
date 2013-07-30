@@ -11,7 +11,8 @@
         "recipe[clang::clang-head]",
         "recipe[python::source]",
         "recipe[ruby]",
-        "recipe[perl]"
+        "recipe[perl]",
+        "recipe[erlang::erlang-maint]"
     ],
     "build_essential": {
         "compiletime": false
