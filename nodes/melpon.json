@@ -13,7 +13,8 @@
         "recipe[ruby]",
         "recipe[perl]",
         "recipe[erlang::erlang-maint]",
-        "recipe[ghc]"
+        "recipe[ghc]",
+        "recipe[mono]"
     ],
     "build_essential": {
         "compiletime": false
