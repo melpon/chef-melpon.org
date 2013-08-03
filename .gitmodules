@@ -13,3 +13,6 @@
 [submodule "cookbooks/ruby_build"]
 	path = cookbooks/ruby_build
 	url = https://github.com/fnichol/chef-ruby_build.git
+[submodule "cookbooks/sudo"]
+	path = cookbooks/sudo
+	url = https://github.com/opscode-cookbooks/sudo.git

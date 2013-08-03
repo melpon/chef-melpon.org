@@ -9,3 +9,4 @@
 /yesodbookjp/test/ >> 127.0.0.1:4000/
 /yesodbookjp/      >> 127.0.0.1:4100/
 /andare/           >> 127.0.0.1:8080/andare/
+/ghwebhook/        >> 127.0.0.1:20267/

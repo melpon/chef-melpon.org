@@ -14,6 +14,7 @@
         "recipe[perl]",
         "recipe[erlang::erlang-maint]",
         "recipe[ghc]",
+        "recipe[ghwebhook]",
         "recipe[mono]"
     ],
     "build_essential": {
