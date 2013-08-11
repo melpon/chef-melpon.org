@@ -14,9 +14,3 @@ git '/usr/local/sprout' do
   user 'root'
   group 'root'
 end
-
-cron 'update_sprout' do
-  action :create
-  minute '30'
-  command 'cd /usr/local/sprout; git checkout master; git pull'
-end
