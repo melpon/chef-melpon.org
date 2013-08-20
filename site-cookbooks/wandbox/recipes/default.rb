@@ -95,6 +95,14 @@ end
 include_recipe 'boost'
 include_recipe 'realpath'
 
+package 'libcap-dev' do
+  action :install
+end
+
+package 'libcap2-bin' do
+  action :install
+end
+
 bash 'make cattleshed' do
   action :run
 
