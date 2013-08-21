@@ -13,6 +13,7 @@
         "recipe[clang::clang-head]",
         "role[python-2_7_3]",
         "role[python-3_3_2]",
+        "recipe[pypy]",
         "recipe[ruby]",
         "recipe[perl]",
         "recipe[erlang::erlang-maint]",
