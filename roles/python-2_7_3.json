@@ -1,0 +1,16 @@
+{
+  "name": "python-2_7_3",
+  "chef_type": "role",
+  "json_class": "Chef::Role",
+  "description": "Python 2.7.3",
+  "default_attributes": {
+    "python": {
+        "prefix_dir": "/usr/local/python-2.7.3",
+        "version": "2.7.3",
+        "checksum": null
+    }
+  },
+  "run_list": [
+    "recipe[python::source]"
+  ]
+}

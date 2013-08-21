@@ -1,0 +1,16 @@
+{
+  "name": "python-3_3_2",
+  "chef_type": "role",
+  "json_class": "Chef::Role",
+  "description": "Python 3.3.2",
+  "default_attributes": {
+    "python": {
+        "prefix_dir": "/usr/local/python-3.3.2",
+        "version": "3.3.2",
+        "checksum": null
+    }
+  },
+  "run_list": [
+    "recipe[python::source]"
+  ]
+}

@@ -11,7 +11,8 @@
         "recipe[sprout]",
         "recipe[clang]",
         "recipe[clang::clang-head]",
-        "recipe[python::source]",
+        "role[python-2_7_3]",
+        "role[python-3_3_2]",
         "recipe[ruby]",
         "recipe[perl]",
         "recipe[erlang::erlang-maint]",
@@ -29,11 +30,6 @@
         "prefix": "/usr/local/boost-1.47.0",
         "bjam_flags": "--with-system --with-program_options",
         "update_profile": true
-    },
-    "python": {
-        "prefix_dir": "/usr/local/python-2.7.3",
-        "version": "2.7.3",
-        "checksum": null
     },
     "swapfile": {
         "size_kb": 4194304
