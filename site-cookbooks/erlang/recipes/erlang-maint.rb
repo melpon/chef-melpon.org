@@ -29,14 +29,17 @@ file build_sh do
   group 'root'
   content <<-SH
   set -e
+  su - #{build_user} -c '
+  set -e
   cd #{build_erlang}
-  sudo -u #{build_user} git checkout maint
-  sudo -u #{build_user} git pull --rebase
-  sudo -u #{build_user} git clean -d -x -f
+  git checkout maint
+  git pull --rebase
+  git clean -d -x -f
 
-  sudo -u #{build_user} ./otp_build autoconf
-  sudo -u #{build_user} ./configure --prefix=#{prefix}
-  sudo -u #{build_user} nice make
+  ./otp_build autoconf
+  ./configure --prefix=#{prefix}
+  nice make
+  '
   make install
   SH
 end
