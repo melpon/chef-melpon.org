@@ -40,6 +40,7 @@ file build_sh do
   ./configure --prefix=#{prefix}
   nice make
   '
+  cd #{build_erlang}
   make install
   SH
 end
