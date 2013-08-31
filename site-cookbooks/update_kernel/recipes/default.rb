@@ -10,7 +10,7 @@ execute "reboot" do
   action :nothing
 end
 
-package "linux-image-3.8.0-26-generic" do
+package "linux-image-3.2.0-52-generic" do
   action :install
   notifies :run, 'execute[reboot]', :immediately
 end
