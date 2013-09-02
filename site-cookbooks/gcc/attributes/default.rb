@@ -41,5 +41,6 @@ default['gcc_list'] = [
 default['gcc_head'] = {
   'repository' => 'git://gcc.gnu.org/git/gcc.git',
   'prefix' => '/usr/local/gcc-head',
-  'flags' => '--enable-languages=c,c++ --enable-lto --disable-multilib --without-ppl --without-cloog-ppl --enable-checking=release --disable-nls',
+  'flags' => '--enable-lto --disable-multilib --without-ppl --without-cloog-ppl --enable-checking=release --disable-nls',
+  'with_gdc' => true,
 }
