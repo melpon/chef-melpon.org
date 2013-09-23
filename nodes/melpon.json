@@ -5,6 +5,7 @@
         "recipe[msgpack::cpp]",
         "recipe[wandbox]",
         "recipe[yesodbookjp]",
+        "recipe[publication]",
         "recipe[mighttpd]",
         "recipe[gcc]",
         "recipe[gcc::gcc-head]",
