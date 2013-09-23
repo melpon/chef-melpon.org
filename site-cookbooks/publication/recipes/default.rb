@@ -44,6 +44,7 @@ end
 git '/home/publication/publication' do
   repository 'git://github.com/melpon/publication.git'
   action :sync
+  enable_submodules true
   user 'publication'
   group 'publication'
 end
