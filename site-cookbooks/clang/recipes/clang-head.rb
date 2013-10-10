@@ -28,43 +28,16 @@ build_libcxx = build_home + '/libcxx'
 build_libcxx_dir = build_home + '/libcxx_build'
 libcxx_prefix = '/usr/local/libcxx-head'
 
+llvm_repo = 'http://llvm.org/svn/llvm-project/llvm/trunk'
+cfe_repo = 'http://llvm.org/svn/llvm-project/cfe/trunk'
+rt_repo = 'http://llvm.org/svn/llvm-project/compiler-rt/trunk'
+libcxx_repo = 'http://llvm.org/svn/llvm-project/libcxx/trunk'
+
 user build_user do
   action :create
   home build_home
   supports :manage_home => true
   shell '/bin/bash'
-end
-
-subversion "svn LLVM head" do
-  action :sync
-  destination build_clang
-  repository 'http://llvm.org/svn/llvm-project/llvm/trunk'
-  user build_user
-  group build_user
-end
-
-subversion "svn Clang head" do
-  action :sync
-  destination "#{build_clang}/tools/clang"
-  repository 'http://llvm.org/svn/llvm-project/cfe/trunk'
-  user build_user
-  group build_user
-end
-
-subversion "svn Compiler-RT head" do
-  action :sync
-  destination "#{build_clang}/projects/compiler-rt"
-  repository 'http://llvm.org/svn/llvm-project/compiler-rt/trunk'
-  user build_user
-  group build_user
-end
-
-subversion "svn libcxx-head" do
-  action :sync
-  destination build_libcxx
-  repository 'http://llvm.org/svn/llvm-project/libcxx/trunk'
-  user build_user
-  group build_user
 end
 
 file build_sh do
@@ -74,16 +47,15 @@ file build_sh do
   content <<-SH
   set -e
 
-  # update llvm-head
-  cd #{build_clang}
-  sudo -u #{build_user} svn update
-  cd #{build_clang}/tools/clang
-  sudo -u #{build_user} svn update
-  cd #{build_clang}/projects/compiler-rt
-  sudo -u #{build_user} svn update
+  # checkout llvm-head
+  sudo -u #{build_user} rm -rf #{build_clang} | true
+  sudo -u #{build_user} mkdir #{build_clang}
+  sudo -u #{build_user} svn co #{llvm_repo} #{build_clang}
+  sudo -u #{build_user} svn co #{cfe_repo} #{build_clang}/tools/clang
+  sudo -u #{build_user} svn co #{rt_repo} #{build_clang}/projects/compiler-rt
 
   # clean llvm-head
-  sudo -u #{build_user} rm -rf #{build_clang_dir}
+  sudo -u #{build_user} rm -rf #{build_clang_dir} | true
   sudo -u #{build_user} mkdir #{build_clang_dir}
   cd #{build_clang_dir}
 
@@ -94,11 +66,11 @@ file build_sh do
 
 
   # update libcxx-head
-  cd #{build_libcxx}
-  sudo -u #{build_user} svn update
+  sudo -u #{build_user} rm -rf #{build_libcxx} | true
+  sudo -u #{build_user} svn co #{libcxx_repo} #{build_libcxx}
 
   # clean libcxx-head
-  sudo -u #{build_user} rm -rf #{build_libcxx_dir}
+  sudo -u #{build_user} rm -rf #{build_libcxx_dir} | true
   sudo -u #{build_user} mkdir #{build_libcxx_dir}
   cd #{build_libcxx_dir}
 
