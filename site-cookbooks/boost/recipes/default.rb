@@ -8,7 +8,7 @@ def install_boost(source, file, build_dir, prefix, bjam_flags, update_profile)
     not_if "test -d #{prefix}/include/boost"
   end
 
-  bash "install-boost" do
+  bash "install-boost #{build_dir}" do
     user "root"
     cwd Chef::Config[:file_cache_path]
     code <<-EOH
@@ -40,12 +40,54 @@ install_boost(
   'boost_1_47_0.tar.gz',
   'boost_1_47_0',
   '/usr/local/boost-1.47.0',
-  '--with-system --with-program_options',
+  '--without-mpi',
+  false)
+install_boost(
+  'http://sourceforge.net/projects/boost/files/boost/1.48.0/',
+  'boost_1_48_0.tar.gz',
+  'boost_1_48_0',
+  '/usr/local/boost-1.48.0',
+  '--without-mpi',
+  false)
+install_boost(
+  'http://sourceforge.net/projects/boost/files/boost/1.49.0/',
+  'boost_1_49_0.tar.gz',
+  'boost_1_49_0',
+  '/usr/local/boost-1.49.0',
+  '--without-mpi',
+  false)
+install_boost(
+  'http://sourceforge.net/projects/boost/files/boost/1.50.0/',
+  'boost_1_50_0.tar.gz',
+  'boost_1_50_0',
+  '/usr/local/boost-1.50.0',
+  '--without-mpi',
+  false)
+install_boost(
+  'http://sourceforge.net/projects/boost/files/boost/1.51.0/',
+  'boost_1_51_0.tar.gz',
+  'boost_1_51_0',
+  '/usr/local/boost-1.51.0',
+  '--without-mpi',
+  false)
+install_boost(
+  'http://sourceforge.net/projects/boost/files/boost/1.52.0/',
+  'boost_1_52_0.tar.gz',
+  'boost_1_52_0',
+  '/usr/local/boost-1.52.0',
+  '--without-mpi',
+  false)
+install_boost(
+  'http://sourceforge.net/projects/boost/files/boost/1.53.0/',
+  'boost_1_53_0.tar.gz',
+  'boost_1_53_0',
+  '/usr/local/boost-1.53.0',
+  '--without-mpi',
   false)
 install_boost(
   'http://sourceforge.net/projects/boost/files/boost/1.54.0/',
   'boost_1_54_0.tar.gz',
   'boost_1_54_0',
   '/usr/local/boost-1.54.0',
-  '--with-system --with-program_options',
+  '--without-mpi',
   false)
