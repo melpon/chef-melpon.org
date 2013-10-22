@@ -65,7 +65,7 @@ bash 'install kennel' do
   ln -s ../../submodules/ace-builds/src-min ace
   ln -s ../../submodules/polyfills polyfills
   cd ../
-  cabal-dev install yesod-platform-1.2.3 --force-reinstalls
+  cabal-dev install yesod-platform-1.2.4.3 --force-reinstalls
   cabal-dev install
   '
   SH
