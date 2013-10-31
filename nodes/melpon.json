@@ -20,7 +20,8 @@
         "recipe[erlang::erlang-maint]",
         "recipe[ghc]",
         "recipe[ghwebhook]",
-        "recipe[mono]"
+        "recipe[mono]",
+        "recipe[sqlite]"
     ],
     "build_essential": {
         "compiletime": false
