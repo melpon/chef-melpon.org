@@ -7,6 +7,10 @@
 # All rights reserved - Do Not Redistribute
 #
 
+package 'haskell-platform' do
+  action :install
+end
+
 # link libgmp.so.3
 bash "/usr/lib/libgmp.so.3" do
   user 'root'
