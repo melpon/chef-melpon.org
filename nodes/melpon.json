@@ -6,6 +6,7 @@
         "recipe[wandbox]",
         "recipe[yesodbookjp]",
         "recipe[publication]",
+        "recipe[mpidl-web]",
         "recipe[mighttpd]",
         "recipe[gcc]",
         "recipe[gcc::gcc-head]",

@@ -41,7 +41,6 @@ end
 git '/home/mpidl-web/mpidl-web' do
   repository 'git://github.com/melpon/mpidl-web.git'
   action :sync
-  enable_submodules true
   user 'mpidl-web'
   group 'mpidl-web'
 end
@@ -52,7 +51,8 @@ bash 'install mpidl-web' do
   code <<-SH
   su - mpidl-web -c '
   cd mpidl-web/site
-  cabal-dev install yesod-platform-1.2.4.2 --force-reinstalls
+  cabal-dev install msgpack-idl -s msgpack-idl
+  cabal-dev install yesod-platform-1.2.4.4 --force-reinstalls
   cabal-dev install
   '
   SH
