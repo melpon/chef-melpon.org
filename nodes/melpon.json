@@ -22,7 +22,8 @@
         "recipe[ghc]",
         "recipe[ghwebhook]",
         "recipe[mono]",
-        "recipe[sqlite]"
+        "recipe[sqlite]",
+        "recipe[lua]"
     ],
     "build_essential": {
         "compiletime": false
