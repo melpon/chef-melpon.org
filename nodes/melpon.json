@@ -25,7 +25,8 @@
         "recipe[sqlite]",
         "recipe[lua]",
         "recipe[php]",
-        "recipe[munin]"
+        "recipe[munin]",
+        "recipe[analog]"
     ],
     "build_essential": {
         "compiletime": false

@@ -17,3 +17,4 @@
 /mpidl/            >> 127.0.0.1:6100/
 
 /munin/            -> /var/cache/munin/www/
+/analog/           -> /var/cache/analog/
