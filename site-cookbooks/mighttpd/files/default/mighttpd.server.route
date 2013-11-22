@@ -15,3 +15,5 @@
 /pub/              >> 127.0.0.1:5100/
 /mpidl/test/       >> 127.0.0.1:6000/
 /mpidl/            >> 127.0.0.1:6100/
+
+/munin/            -> /var/cache/munin/www/

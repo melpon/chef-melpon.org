@@ -24,7 +24,8 @@
         "recipe[mono]",
         "recipe[sqlite]",
         "recipe[lua]",
-        "recipe[php]"
+        "recipe[php]",
+        "recipe[munin]"
     ],
     "build_essential": {
         "compiletime": false
