@@ -25,6 +25,7 @@
         "recipe[sqlite]",
         "recipe[lua]",
         "recipe[php]",
+        "recipe[lazyk]",
         "recipe[munin]",
         "recipe[analog]"
     ],
