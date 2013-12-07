@@ -87,6 +87,7 @@ cron 'update_clang_head' do
   minute '0'
   hour '5'
   command build_sh
+  mailto node['email']
 end
 
 # test building

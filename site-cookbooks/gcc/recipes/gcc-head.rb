@@ -96,6 +96,7 @@ cron 'update_gcc_head' do
   minute '0'
   hour '4'
   command build_sh
+  mailto node['email']
 end
 
 # test building

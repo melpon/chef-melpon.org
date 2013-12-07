@@ -51,6 +51,7 @@ cron 'update_erlang_maint' do
   minute '0'
   hour '6'
   command build_sh
+  mailto node['email']
 end
 
 # test building
