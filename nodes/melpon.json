@@ -26,6 +26,7 @@
         "recipe[lua]",
         "recipe[php]",
         "recipe[lazyk]",
+        "recipe[clisp]",
         "recipe[munin]",
         "recipe[analog]"
     ],
