@@ -17,6 +17,7 @@
         "role[python-3_3_2]",
         "recipe[pypy]",
         "recipe[ruby]",
+        "recipe[mruby::mruby-head]",
         "recipe[perl]",
         "recipe[erlang::erlang-maint]",
         "recipe[ghc]",
