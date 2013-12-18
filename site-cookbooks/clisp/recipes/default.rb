@@ -50,8 +50,8 @@ def install_clisp(source, file, build_dir, prefix)
     cd #{build_dir}
     cd src
     wget  http://sourceforge.net/p/clisp/bugs/_discuss/thread/9285dfcc/22a6/attachment/uu -q -O - | patch -p0
-    sed -i "s/ac_subst_vars='\(.*\)/ac_subst_vars='\1\nhost_cpu_instructionset/" configure
-    sed -i 's/ld -r/\\$(LD) -r/' makemake.in
+    sed -i "s/ac_subst_vars='\\(.*\\)/ac_subst_vars='\\1\\nhost_cpu_instructionset/" configure
+    sed -i 's/ld -r/\\\\$(LD) -r/' makemake.in
     cd ..
     CC='gcc -m32' LD='ld -melf_i386' ./configure --prefix=#{prefix} --cbc build --with-libsigsegv-prefix=#{prefix}
     make install -C build
@@ -61,7 +61,7 @@ def install_clisp(source, file, build_dir, prefix)
 end
 
 install_libsigsegv(
-  'http://ftp.gnu.org/pub/gnu/libsigsegv',
+  'http://ftp.gnu.org/pub/gnu/libsigsegv/',
   'libsigsegv-2.8.tar.gz',
   'libsigsegv-2.8',
   '/usr/local/clisp-2.49.0')
