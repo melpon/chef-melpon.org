@@ -28,6 +28,7 @@
         "recipe[php]",
         "recipe[lazyk]",
         "recipe[java]",
+        "recipe[clisp]",
         "recipe[munin]",
         "recipe[analog]"
     ],
