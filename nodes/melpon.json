@@ -29,6 +29,7 @@
         "recipe[lazyk]",
         "recipe[java]",
         "recipe[clisp]",
+        "recipe[fpc]",
         "recipe[munin]",
         "recipe[analog]"
     ],
