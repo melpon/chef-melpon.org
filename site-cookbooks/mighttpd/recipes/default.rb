@@ -26,6 +26,12 @@ bash "install mighttpd" do
   not_if "su - mighttpd -c 'test -e .cabal/bin/mighty'"
 end
 
+directory '/var/log/mightylog' do
+  action :create
+  owner 'mighttpd'
+  group 'mighttpd'
+end
+
 cookbook_file "/home/mighttpd/mighttpd.server.conf" do
   user 'mighttpd'
   group 'mighttpd'
