@@ -84,6 +84,12 @@ end
 
 
 install_llvm(
+    'llvm-3.4',
+    'http://llvm.org/svn/llvm-project/llvm/tags/RELEASE_34/final',
+    'http://llvm.org/svn/llvm-project/cfe/tags/RELEASE_34/final',
+    'http://llvm.org/svn/llvm-project/compiler-rt/tags/RELEASE_34/final',
+    '/usr/local/llvm-3.4')
+install_llvm(
     'llvm-3.3',
     'http://llvm.org/svn/llvm-project/llvm/tags/RELEASE_33/final',
     'http://llvm.org/svn/llvm-project/cfe/tags/RELEASE_33/final',
@@ -108,6 +114,11 @@ install_llvm(
     'http://llvm.org/svn/llvm-project/compiler-rt/tags/RELEASE_30/final',
     '/usr/local/llvm-3.0')
 
+install_libcxx(
+    'libcxx-3.4',
+    'http://llvm.org/svn/llvm-project/libcxx/tags/RELEASE_34/final',
+    '/usr/local/libcxx-3.4',
+    '/usr/local/llvm-3.4')
 install_libcxx(
     'libcxx-3.3',
     'http://llvm.org/svn/llvm-project/libcxx/tags/RELEASE_33/final',
