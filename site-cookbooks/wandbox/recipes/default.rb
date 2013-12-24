@@ -61,11 +61,8 @@ bash 'install kennel' do
 
   code <<-SH
   su - wandbox -c '
-  cd wandbox/kennel/static
-  ln -s ../../submodules/ace-builds/src-min ace
-  ln -s ../../submodules/polyfills polyfills
-  cd ../
-  cabal-dev install yesod-platform-1.2.4.3 --force-reinstalls
+  cd wandbox/kennel
+  cabal-dev install yesod-platform-1.2.5.2 --force-reinstalls
   cabal-dev install
   '
   SH
