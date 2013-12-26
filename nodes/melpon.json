@@ -30,6 +30,7 @@
         "recipe[java]",
         "recipe[clisp]",
         "recipe[fpc]",
+        "recipe[rust::rust-head]",
         "recipe[munin]",
         "recipe[analog]"
     ],
