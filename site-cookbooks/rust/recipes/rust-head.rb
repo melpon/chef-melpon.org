@@ -34,16 +34,17 @@ file build_sh do
 
   set +e
   git pull --rebase
-  set -e
   if [ $? -ne 0 ]; then
+    set -e
     git clean -d -x -f
     git pull --rebase
   fi
+  set -e
 
   set +e
   nice make
-  set -e
   if [ $? -ne 0 ]; then
+    set -e
     git clean -d -x -f
     ./configure --prefix=#{prefix} --disable-docs --disable-llvm-assertions --disable-debug
     nice make
