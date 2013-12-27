@@ -32,7 +32,8 @@
         "recipe[fpc]",
         "recipe[rust::rust-head]",
         "recipe[munin]",
-        "recipe[analog]"
+        "recipe[analog]",
+        "recipe[melpon-org]",
     ],
     "build_essential": {
         "compiletime": false
