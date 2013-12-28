@@ -55,7 +55,7 @@ bash 'install melpon-org' do
   code <<-SH
   su - melpon-org -c '
   cd melpon-org/site
-  cabal-dev install yesod-platform-1.2.4.4 --force-reinstalls
+  cabal-dev install yesod-platform-1.2.5.2
   cabal-dev install
   '
   SH
