@@ -29,6 +29,7 @@
         "recipe[lazyk]",
         "recipe[java]",
         "recipe[java-run]",
+        "recipe[groovy]",
         "recipe[clisp]",
         "recipe[fpc]",
         "recipe[rust::rust-head]",
