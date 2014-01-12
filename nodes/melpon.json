@@ -28,12 +28,13 @@
         "recipe[php]",
         "recipe[lazyk]",
         "recipe[java]",
+        "recipe[java-run]",
         "recipe[clisp]",
         "recipe[fpc]",
         "recipe[rust::rust-head]",
         "recipe[munin]",
         "recipe[analog]",
-        "recipe[melpon-org]",
+        "recipe[melpon-org]"
     ],
     "build_essential": {
         "compiletime": false
