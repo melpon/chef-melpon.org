@@ -36,6 +36,8 @@
         "recipe[munin]",
         "recipe[nodejs]",
         "recipe[spidermonkey]",
+        "recipe[coffee-script]",
+        "recipe[coffee-script::head]",
         "recipe[analog]",
         "recipe[melpon-org]"
     ],
