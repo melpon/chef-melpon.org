@@ -1,5 +1,9 @@
 include_recipe "build-essential"
 
+package 'python-dev' do
+  action :install
+end
+
 def install_boost(source, file, build_dir, prefix, bjam_flags, update_profile)
   remote_file "#{Chef::Config[:file_cache_path]}/#{file}" do
     source source + file
