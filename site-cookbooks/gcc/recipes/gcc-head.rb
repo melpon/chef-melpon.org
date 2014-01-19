@@ -19,30 +19,6 @@ user build_user do
   shell '/bin/bash'
 end
 
-# Download from: https://gist.github.com/mikesmullin/5660466
-# monkey-patch Chef Git Provider
-# to raise the default ShellOut timeout setting
-# because this repo can take over 10min
-# to clone from github.com
-class ::Chef::Provider::Git
-  def clone # based on opscode/chef commit b86c5b06
-    converge_by("clone from #{@new_resource.repository} into #{@new_resource.destination}") do
-      remote = @new_resource.remote
-
-      args = []
-      args << "-o #{remote}" unless remote == 'origin'
-      args << "--depth #{@new_resource.depth}" if @new_resource.depth
-
-      timeout = 100000 # i believe these are seconds
-
-      Chef::Log.info "#{@new_resource} cloning repo #{@new_resource.repository} to #{@new_resource.destination} with timeout #{timeout}"
-
-      clone_cmd = "git clone #{args.join(' ')} #{@new_resource.repository} #{Shellwords.escape @new_resource.destination}"
-      shell_out!(clone_cmd, run_options(:log_level => :info, :timeout => timeout))
-    end
-  end
-end
-
 git build_gcc do
   repository gcc_git_repo
   action :sync
