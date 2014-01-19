@@ -9,7 +9,7 @@ bash 'install coffee-script HEAD' do
     cd #{prefix}
     #{npm} install
   SH
-  not_if "test -d #{prefix}/bin/coffee"
+  not_if "test -e #{prefix}/bin/coffee"
 end
 
 cron 'update_coffee-script_head' do

@@ -16,7 +16,7 @@ def install_coffee_script(prefix, commit, npm)
       git checkout #{commit}
       #{npm} install
     SH
-    not_if "test -d #{prefix}/bin/coffee"
+    not_if "test -e #{prefix}/bin/coffee"
   end
 end
 
