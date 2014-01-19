@@ -1,7 +1,14 @@
 include_recipe "build-essential"
 
-package 'python-dev' do
-  action :install
+
+%w{
+  python-dev
+  libbz2-dev
+  zlib1g-dev
+}.each do |pc|
+  package pc do
+    action :install
+  end
 end
 
 def install_boost(source, file, build_dir, prefix, bjam_flags, update_profile)
