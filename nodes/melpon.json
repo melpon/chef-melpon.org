@@ -1,5 +1,6 @@
 {
     "run_list":[
+        "recipe[nginx]",
         "recipe[swapfile]",
         "recipe[andare]",
         "recipe[msgpack::cpp]",
