@@ -43,7 +43,7 @@ def install_llvm(name, llvm_repo, clang_repo, crt_repo, prefix)
     cwd Chef::Config[:file_cache_path]
     code <<-EOH
     set -e
-    mkdir #{name}_build
+    mkdir -p #{name}_build
     cd #{name}_build
     ../#{name}/configure --prefix=#{prefix} --enable-optimized --enable-assertions=no --enable-targets=host-only
     make -j2 > log 2>err
