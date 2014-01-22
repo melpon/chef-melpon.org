@@ -106,7 +106,8 @@ bash 'make cattleshed' do
   code <<-SH
   su - wandbox -c '
   cd wandbox/cattleshed
-  ./configure
+  autoreconf -i
+  ./configure --with-boost-include=/usr/local/boost-1.47.0/include --with-boost-lib=/usr/local/boost-1.47.0/lib
   make
   '
   SH
