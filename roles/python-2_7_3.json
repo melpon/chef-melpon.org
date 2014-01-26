@@ -5,12 +5,13 @@
   "description": "Python 2.7.3",
   "default_attributes": {
     "python": {
+        "install_method": "source",
         "prefix_dir": "/usr/local/python-2.7.3",
         "version": "2.7.3",
         "checksum": null
     }
   },
   "run_list": [
-    "recipe[python::source]"
+    "recipe[python]"
   ]
 }
