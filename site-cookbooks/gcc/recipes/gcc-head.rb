@@ -22,6 +22,7 @@ end
 git build_gcc do
   repository gcc_git_repo
   action :sync
+  timeout 3600
   user build_user
   group build_user
 end
@@ -30,6 +31,7 @@ if with_gdc then
   git build_gdc do
     repository 'https://github.com/D-Programming-GDC/GDC.git'
     action :sync
+    depth 1
     user build_user
     group build_user
   end
@@ -79,6 +81,7 @@ end
 bash 'test building gcc-head' do
   action :run
   user 'root'
+  timeout 3600
   code build_sh
   not_if "test -e #{node['gcc_head']['prefix'] + '/bin/gcc'}"
 end

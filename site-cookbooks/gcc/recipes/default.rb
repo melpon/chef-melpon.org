@@ -16,7 +16,7 @@ def install_gcc(source, file, build_dir, prefix, flags)
     tar xf #{file}
   
     set -e
-    mkdir #{build_dir}_build
+    mkdir -p #{build_dir}_build
     cd #{build_dir}_build
   
     export LIBRARY_PATH=/usr/lib/x86_64-linux-gnu
