@@ -43,9 +43,6 @@
     "build_essential": {
         "compiletime": false
     },
-    "gcc_head": {
-        "with_gdc": false
-    },
     "boost": {
         "source": "http://sourceforge.net/projects/boost/files/boost/1.47.0/",
         "file": "boost_1_47_0.tar.gz",
