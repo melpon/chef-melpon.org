@@ -24,3 +24,8 @@ install_coffee_script(
   '/usr/local/coffee-script-1.6.3',
   'refs/tags/1.6.3',
   '/usr/local/node-0.10.24/bin/npm')
+
+install_coffee_script(
+  '/usr/local/coffee-script-1.7.1',
+  'refs/tags/1.7.1',
+  '/usr/local/node-0.10.24/bin/npm')
