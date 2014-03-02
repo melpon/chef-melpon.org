@@ -24,7 +24,7 @@ def install_cpython(branch, prefix, build_sh)
       su - #{$build_user} -c '
         set -ex
         cd #{$build_dir}
-        hg purge
+        hg purge --all
         hg update -c #{branch}
         hg pull -u
 
