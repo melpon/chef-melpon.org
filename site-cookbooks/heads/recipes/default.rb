@@ -17,6 +17,8 @@ user 'heads' do
 end
 
 directory build_dir do
+  user 'root'
+  group 'root'
 end
 
 file build_sh do

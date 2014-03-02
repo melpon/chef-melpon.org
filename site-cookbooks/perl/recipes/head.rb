@@ -1,21 +1,16 @@
 include_recipe 'heads'
 
-build_dir = '/home/heads/perl'
+build_user = 'heads'
+build_home = '/home/' + build_user
+build_dir = build_home + '/perl'
 prefix = '/usr/local/perl-head'
-build_sh = '/home/heads/build/perl.sh'
-
-user build_user do
-  action :create
-  home build_home
-  supports :manage_home => true
-  shell '/bin/bash'
-end
+build_sh = build_home + '/build/perl.sh'
 
 git build_dir do
   repository 'git://perl5.git.perl.org/perl.git'
   action :sync
-  user 'heads'
-  group 'heads'
+  user build_user
+  group build_user
 end
 
 file build_sh do
@@ -24,21 +19,19 @@ file build_sh do
   group 'root'
   content <<-SH
   set -ex
-  su - heads -c '
+  su - #{build_user} -c '
     cd #{build_dir}
     git checkout blead
     git clean -xdqf
 
-    ./configure --prefix=#{prefix} -Dusedevel
+    ./configure.gnu --prefix=#{prefix} -Dusedevel
     nice make
   '
   cd #{build_dir}
   nice make install
 
-  su - heads -c '
-    cd #{build_dir}
-    ln -s perl5.* perl
-  '
+  cd #{prefix}/bin
+  ln -s perl5.* perl
   SH
 end
 
