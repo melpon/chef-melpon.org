@@ -17,6 +17,7 @@
         "recipe[clang::clang-head]",
         "recipe[pypy]",
         "recipe[ruby]",
+        "recipe[ruby::head]",
         "recipe[mruby::mruby-head]",
         "recipe[perl]",
         "recipe[perl::head]",
