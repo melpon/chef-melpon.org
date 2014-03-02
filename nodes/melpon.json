@@ -5,6 +5,7 @@
         "recipe[andare]",
         "role[python-2_7_3]",
         "role[python-3_3_2]",
+        "recipe[cpython::head]",
         "recipe[msgpack::cpp]",
         "recipe[wandbox]",
         "recipe[mpidl-web]",
