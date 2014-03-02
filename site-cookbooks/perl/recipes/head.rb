@@ -21,8 +21,9 @@ file build_sh do
   set -ex
   su - #{build_user} -c '
     cd #{build_dir}
-    git checkout blead
     git clean -xdqf
+    git checkout blead
+    git pull origin blead
 
     ./configure.gnu --prefix=#{prefix} -Dusedevel
     nice make
