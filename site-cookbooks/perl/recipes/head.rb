@@ -32,6 +32,7 @@ file build_sh do
   nice make install
 
   cd #{prefix}/bin
+  rm perl || true
   ln -s perl5.* perl
   SH
 end
