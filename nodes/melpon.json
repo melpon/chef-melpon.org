@@ -28,6 +28,7 @@
         "recipe[sqlite]",
         "recipe[lua]",
         "recipe[php]",
+        "recipe[php::head]",
         "recipe[lazyk]",
         "recipe[java]",
         "recipe[java-run]",
