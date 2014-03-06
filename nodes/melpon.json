@@ -38,6 +38,7 @@
         "recipe[rust::rust-head]",
         "recipe[munin]",
         "recipe[nodejs]",
+        "recipe[nodejs::head]",
         "recipe[spidermonkey]",
         "recipe[coffee-script]",
         "recipe[coffee-script::head]",
