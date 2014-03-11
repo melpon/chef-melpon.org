@@ -21,7 +21,7 @@
         "recipe[mruby::mruby-head]",
         "recipe[perl]",
         "recipe[perl::head]",
-        "recipe[erlang::erlang-maint]",
+        "recipe[erlang::head]",
         "recipe[ghc]",
         "recipe[ghwebhook]",
         "recipe[mono]",
