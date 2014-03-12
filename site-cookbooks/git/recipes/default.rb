@@ -23,3 +23,8 @@ hgext.purge=
 SH
 
 end
+
+package 'fossil' do
+  action :install
+end
+

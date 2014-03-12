@@ -27,6 +27,7 @@
         "recipe[mono]",
         "recipe[mono::head]",
         "recipe[sqlite]",
+        "recipe[sqlite::head]",
         "recipe[lua]",
         "recipe[php]",
         "recipe[php::head]",
