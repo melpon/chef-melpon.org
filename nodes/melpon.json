@@ -25,6 +25,7 @@
         "recipe[ghc]",
         "recipe[ghwebhook]",
         "recipe[mono]",
+        "recipe[mono::head]",
         "recipe[sqlite]",
         "recipe[lua]",
         "recipe[php]",
