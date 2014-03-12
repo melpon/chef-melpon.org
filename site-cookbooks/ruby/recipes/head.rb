@@ -10,7 +10,7 @@ bash 'git clone ruby' do
   action :run
   user build_user
   cwd build_home
-  code "git clone git://github.com/ruby/ruby.git"
+  code "git clone https://github.com/ruby/ruby.git"
   not_if "test -d #{build_home + '/ruby'}"
 end
 
