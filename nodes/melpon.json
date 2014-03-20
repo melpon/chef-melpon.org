@@ -37,7 +37,7 @@
         "recipe[groovy]",
         "recipe[clisp]",
         "recipe[fpc]",
-        "recipe[rust::rust-head]",
+        "recipe[rust::head]",
         "recipe[munin]",
         "recipe[nodejs]",
         "recipe[nodejs::head]",
