@@ -11,7 +11,7 @@
         "recipe[mpidl-web]",
         "recipe[mighttpd]",
         "recipe[gcc]",
-        "recipe[gcc::gcc-head]",
+        "recipe[gcc::head]",
         "recipe[sprout]",
         "recipe[clang]",
         "recipe[clang::clang-head]",
