@@ -8,6 +8,7 @@
 #
 build_sh = '/home/heads/build.sh'
 build_dir = '/home/heads/build'
+with_cron_sh = '/home/heads/with_cron.sh'
 
 user 'heads' do
   action :create
@@ -26,11 +27,28 @@ file build_sh do
   user 'root'
   group 'root'
   content <<-SH
-    set -ex
+    set -x
+    has_error=0
     cd #{build_dir}
-    ls *.sh -1 | while read line; do
-      ./$line
+    for line in `ls *.sh -1`; do
+      ./$line > /tmp/heads_cron_$line 2>&1
+      if [ $? -ne 0 ]; then
+        has_error=1
+      fi
     done
+    exit $has_error
+  SH
+end
+
+file with_cron_sh do
+  mode '0755'
+  user 'root'
+  group 'root'
+  content <<-SH
+    #{build_sh} > /tmp/heads_cron 2>&1
+    if [ $? -ne 0 ]; then
+        cat /tmp/heads_cron
+    fi
   SH
 end
 
@@ -39,6 +57,6 @@ cron 'update_heads' do
   action :create
   minute '1'
   hour '0'
-  command build_sh
+  command with_cron_sh
   mailto node['email']
 end
