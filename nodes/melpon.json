@@ -14,7 +14,7 @@
         "recipe[gcc::head]",
         "recipe[sprout]",
         "recipe[clang]",
-        "recipe[clang::clang-head]",
+        "recipe[clang::head]",
         "recipe[pypy]",
         "recipe[ruby]",
         "recipe[ruby::head]",
