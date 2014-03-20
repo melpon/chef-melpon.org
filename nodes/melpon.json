@@ -18,7 +18,7 @@
         "recipe[pypy]",
         "recipe[ruby]",
         "recipe[ruby::head]",
-        "recipe[mruby::mruby-head]",
+        "recipe[mruby::head]",
         "recipe[perl]",
         "recipe[perl::head]",
         "recipe[erlang::head]",
