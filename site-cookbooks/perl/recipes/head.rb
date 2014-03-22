@@ -3,6 +3,8 @@ include_recipe 'heads'
 build_user = 'heads'
 build_home = '/home/' + build_user
 build_dir = build_home + '/perl'
+# This prefix is removed every building.
+# So the prefix must not specify '/usr/local'
 prefix = '/usr/local/perl-head'
 build_sh = build_home + '/build/perl.sh'
 
@@ -28,6 +30,8 @@ file build_sh do
     ./configure.gnu --prefix=#{prefix} -Dusedevel
     nice make
   '
+  rm -rf #{prefix}
+
   cd #{build_dir}
   nice make install
 
