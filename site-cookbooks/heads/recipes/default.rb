@@ -27,15 +27,19 @@ file build_sh do
   user 'root'
   group 'root'
   content <<-SH
-    set -x
     has_error=0
     cd #{build_dir}
+    echo "[`date`] ---- BEGIN $0 ----"
     for line in `ls *.sh -1`; do
+      echo "[`date`] start building $line"
       ./$line > /tmp/heads_cron_$line 2>&1
       if [ $? -ne 0 ]; then
+        echo "[`date`] FAILURE: $line. log file is /tmp/heads_cron_$line"
         has_error=1
       fi
+      echo "[`date`] end building $line"
     done
+    echo "[`date`] ---- END $0 with exit $has_error ----"
     exit $has_error
   SH
 end
