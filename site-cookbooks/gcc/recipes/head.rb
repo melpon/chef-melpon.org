@@ -24,6 +24,8 @@ bash 'git clone gcc' do
     su - #{build_user} -c '
       mkdir -p #{build_dir}
       git clone #{gcc_git_repo} #{build_dir + '/gcc-source'}
+      cd #{build_dir + '/gcc-source'}
+      git checkout master
     '
   SH
   not_if "test -d #{build_dir + '/gcc-source'}"
@@ -38,6 +40,8 @@ if with_gdc then
       su - #{build_user} -c '
         mkdir -p #{build_dir}
         git clone #{gdc_git_repo} #{build_dir + '/gdc-source'}
+        cd #{build_dir + '/gdc-source'}
+        git checkout master
       '
     SH
     not_if "test -d #{build_dir + '/gdc-source'}"
@@ -56,16 +60,14 @@ file build_sh do
 
     cd #{build_dir}/gcc-source
     git clean -xdqf
-    git checkout master
-    git clean -xdqf
-    git pull
+    git fetch
+    git checkout origin/master -f
     git clean -xdqf
 
     #{"cd #{build_dir}/gdc-source" if with_gdc}
     #{'git clean -xdqf' if with_gdc}
-    #{'git checkout master' if with_gdc}
-    #{'git clean -xdqf' if with_gdc}
-    #{'git pull' if with_gdc}
+    #{'git fetch' if with_gdc}
+    #{'git checkout origin/master -f' if with_gdc}
     #{'git clean -xdqf' if with_gdc}
     #{"./setup-gcc.sh #{build_dir}/gcc-source" if with_gdc}
 
