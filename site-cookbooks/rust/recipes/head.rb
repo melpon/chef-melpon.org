@@ -26,10 +26,12 @@ file build_sh do
   group 'root'
   content <<-SH
   set -ex
+  cd #{build_dir}
+  git clean -xdqf
+  chown heads:heads -R ./
   su - #{build_user} -c '
     set -ex
     cd #{build_dir}
-    git clean -xdqf
     git pull
     git clean -xdqf
 
