@@ -45,6 +45,7 @@
         "recipe[spidermonkey]",
         "recipe[coffee-script]",
         "recipe[coffee-script::head]",
+        "recipe[rill::head]",
         "recipe[analog]",
         "recipe[melpon-org]",
         "recipe[sendmail]"
