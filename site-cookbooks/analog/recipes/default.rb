@@ -23,5 +23,5 @@ cron 'update_report' do
   action :create
   minute '0'
   command 'analog'
-  mailto node['email']
+  # mailto node['email']
 end
