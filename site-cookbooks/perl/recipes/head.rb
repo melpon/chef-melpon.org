@@ -25,6 +25,7 @@ file build_sh do
     cd #{build_dir}
     git clean -xdqf
     git checkout blead
+    git reset --hard
     git pull origin blead
 
     ./configure.gnu --prefix=#{prefix} -Dusedevel

@@ -36,8 +36,8 @@ file build_sh do
     set -ex
     cd #{build_dir}
     git clean -xdqf
-    git fetch
-    git checkout -f remotes/origin/master
+    git reset --hard master
+    git pull
     git clean -xdqf
 
     export PATH=#{build_home}/.cabal/bin:$PATH

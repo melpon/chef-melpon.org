@@ -24,6 +24,7 @@ file build_sh do
     cd #{build_dir}
     git clean -xdqf
     git checkout master
+    git reset --hard
     git pull origin master
 
     ./buildconf

@@ -25,9 +25,10 @@ file build_sh do
     set -ex
     cd #{build_dir}
     git clean -xdqf
+    git reset --hard
     git checkout master
-    git clean -xdqf
     git pull
+    git clean -xdqf
 
     ./autogen.sh --prefix=#{prefix} --disable-nls
     PATH=/usr/local/mono-3.2.0/bin:$PATH nice make

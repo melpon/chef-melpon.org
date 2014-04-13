@@ -31,6 +31,7 @@ file build_sh do
     set -ex
     cd #{build_dir}
     git clean -dqxf
+    git reset --hard
     git pull
     git clean -dqxf
 

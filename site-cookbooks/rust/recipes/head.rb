@@ -32,6 +32,7 @@ file build_sh do
   su - #{build_user} -c '
     set -ex
     cd #{build_dir}
+    git reset --hard
     git pull
     git clean -xdqf
 

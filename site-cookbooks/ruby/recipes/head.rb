@@ -26,6 +26,7 @@ file build_sh do
     cd #{build_dir}
     git clean -xdqf
     git checkout trunk
+    git reset --hard
     git pull --ff-only
 
     autoconf
