@@ -12,6 +12,7 @@
         "recipe[mighttpd]",
         "recipe[gcc]",
         "recipe[gcc::head]",
+        "recipe[gdc::head]",
         "recipe[sprout]",
         "recipe[clang]",
         "recipe[clang::head]",

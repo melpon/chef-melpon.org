@@ -4,16 +4,18 @@ include_recipe 'gcc::depends'
 
 build_user = 'heads'
 build_home = '/home/' + build_user
-build_dir = build_home + '/gcc'
-prefix = '/usr/local/gcc-head'
-build_sh = build_home + '/build/gcc.sh'
+build_dir = build_home + '/gdc'
+prefix = '/usr/local/gdc-head'
+build_sh = build_home + '/build/gdc.sh'
 
 gcc_git_repo = 'git://gcc.gnu.org/git/gcc.git'
 flags = '--enable-lto --disable-multilib --without-ppl --without-cloog-ppl --enable-checking=release --disable-nls'
 
-languages = 'c,c++'
+gdc_git_repo = 'https://github.com/D-Programming-GDC/GDC.git'
 
-bash 'git clone gcc' do
+languages = 'd'
+
+bash 'git clone gcc for gdc' do
   action :run
   user 'root'
   cwd build_home
@@ -28,6 +30,21 @@ bash 'git clone gcc' do
   not_if "test -d #{build_dir + '/gcc-source'}"
 end
 
+bash 'git clone gdc' do
+  action :run
+  user 'root'
+  cwd build_home
+  code <<-SH
+    su - #{build_user} -c '
+      mkdir -p #{build_dir}
+      git clone #{gdc_git_repo} #{build_dir + '/gdc-source'}
+      cd #{build_dir + '/gdc-source'}
+      git checkout master
+    '
+  SH
+  not_if "test -d #{build_dir + '/gdc-source'}"
+end
+
 file build_sh do
   mode '0755'
   user 'root'
@@ -39,9 +56,16 @@ file build_sh do
 
     cd #{build_dir}/gcc-source
     git clean -xdqf
+    git reset --hard master
+    git pull
+    git clean -xdqf
+
+    cd #{build_dir}/gdc-source
+    git clean -xdqf
     git reset --hard
     git pull
     git clean -xdqf
+    ./setup-gcc.sh #{build_dir}/gcc-source
 
     rm -rf #{build_dir}/build || true
     mkdir #{build_dir}/build
@@ -56,9 +80,9 @@ file build_sh do
 end
 
 # test building
-bash 'test building gcc-head' do
+bash 'test building gdc-head' do
   action :run
   user 'root'
   code build_sh
-  not_if "test -e #{prefix + '/bin/gcc'}"
+  not_if "test -e #{prefix + '/bin/gdc'}"
 end
