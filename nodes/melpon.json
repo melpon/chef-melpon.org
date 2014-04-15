@@ -23,6 +23,7 @@
         "recipe[perl]",
         "recipe[perl::head]",
         "recipe[erlang::head]",
+        "recipe[elixir::head]",
         "recipe[ghc]",
         "recipe[ghc::head]",
         "recipe[ghwebhook]",
