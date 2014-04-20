@@ -50,21 +50,35 @@ file build_sh do
   user 'root'
   group 'root'
   content <<-SH
+  #!/bin/bash
+
   set -ex
   su - #{build_user} -c '
     set -ex
-
-    cd #{build_dir}/gcc-source
-    git clean -xdqf
-    git reset --hard master
-    git pull
-    git clean -xdqf
 
     cd #{build_dir}/gdc-source
     git clean -xdqf
     git reset --hard
     git pull
     git clean -xdqf
+
+    cd #{build_dir}/gcc-source
+    git clean -xdqf
+    git reset --hard
+    git pull
+  '
+  cd /home/heads/gdc/gcc-source
+  UNTIL=`cat ../gdc-source/gcc.version|cut -d- -f3|sed 's/\\(....\\)\\(..\\)\\(..\\)/\\\\1-\\\\2-\\\\3/'`
+  COMMIT=`git log origin/master --until $UNTIL -n1 --pretty=format:%H`
+  echo $COMMIT > commit
+  su - heads -c '
+    set -ex
+
+    cd /home/heads/gdc/gcc-source
+    git reset --hard `cat commit`
+    git clean -xdqf
+
+    cd #{build_dir}/gdc-source
     ./setup-gcc.sh #{build_dir}/gcc-source
 
     rm -rf #{build_dir}/build || true
