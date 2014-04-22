@@ -7,6 +7,7 @@ prefix = '/usr/local/rust-head'
 build_sh = build_home + '/build/rust.sh'
 
 git_repo = 'https://github.com/mozilla/rust.git'
+gcc_root = '/usr/local/gcc-4.8.2'
 
 bash 'git clone rust' do
   action :run
@@ -36,6 +37,7 @@ file build_sh do
     git pull
     git clean -xdqf
 
+    export PATH=#{gcc_root}/bin:$PATH
     ./configure --prefix=#{prefix} --disable-docs --disable-llvm-assertions --disable-debug
     nice make -j3
   '
