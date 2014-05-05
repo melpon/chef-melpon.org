@@ -56,6 +56,7 @@ file build_sh do
     mkdir -p $LLVM_BUILD
     cd $LLVM_BUILD
 
+    export LD_LIBRARY_PATH=/usr/local/gcc-4.8.2/lib64:$LD_LIBRARY_PATH
     # build llvm-head
     CC=#{with_gcc}/bin/gcc CXX=#{with_gcc}/bin/g++ $LLVM_SOURCE/configure --prefix=#{llvm_prefix} --enable-optimized --enable-assertions=no --enable-targets=host-only --enable-clang-static-analyzer --with-gcc-toolchain=#{with_gcc}
     nice make -j2
