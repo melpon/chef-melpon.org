@@ -38,8 +38,12 @@ file build_sh do
   content <<-SH
   set -ex
 
+  export LD_LIBRARY_PATH=#{with_gcc}/lib64:$LD_LIBRARY_PATH
+
   su - #{build_user} -c '
     set -ex
+
+    export LD_LIBRARY_PATH=#{with_gcc}/lib64:$LD_LIBRARY_PATH
 
     LLVM_SOURCE="#{build_dir}/llvm-source"
     LLVM_BUILD="#{build_dir}/llvm-build"
@@ -56,7 +60,6 @@ file build_sh do
     mkdir -p $LLVM_BUILD
     cd $LLVM_BUILD
 
-    export LD_LIBRARY_PATH=/usr/local/gcc-4.8.2/lib64:$LD_LIBRARY_PATH
     # build llvm-head
     CC=#{with_gcc}/bin/gcc CXX=#{with_gcc}/bin/g++ $LLVM_SOURCE/configure --prefix=#{llvm_prefix} --enable-optimized --enable-assertions=no --enable-targets=host-only --enable-clang-static-analyzer --with-gcc-toolchain=#{with_gcc}
     nice make -j2
@@ -64,8 +67,16 @@ file build_sh do
   cd #{build_dir}/llvm-build
   make install
 
+  echo '#!/bin/sh
+export LD_LIBRARY_PATH=#{with_gcc}/lib64:$LD_LIBRARY_PATH
+#{llvm_prefix}/bin/clang++ "$@"
+  ' > #{llvm_prefix}/bin/run-clang++.sh
+  chmod +x #{llvm_prefix}/bin/run-clang++.sh
+
   su - #{build_user} -c '
     set -ex
+
+    export LD_LIBRARY_PATH=#{with_gcc}/lib64:$LD_LIBRARY_PATH
 
     LIBCXX_SOURCE="#{build_dir}/libcxx-source"
     LIBCXX_BUILD="#{build_dir}/libcxx-build"
