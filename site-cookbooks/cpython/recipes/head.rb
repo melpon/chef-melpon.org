@@ -14,7 +14,7 @@ bash 'hg clone cpython' do
   not_if "test -d #{$build_home + '/cpython'}"
 end
 
-def install_cpython(branch, prefix, build_sh)
+def install_cpython(branch, prefix, build_sh, venv_flags)
     file build_sh do
       mode '0755'
       user 'root'
@@ -27,6 +27,9 @@ def install_cpython(branch, prefix, build_sh)
         hg purge --all
         hg update -c #{branch}
         hg pull -u
+
+        virtualenv #{venv_flags} venv
+        source venv/bin/activate
 
         ./configure --prefix=#{prefix}
         nice make
@@ -48,8 +51,10 @@ end
 install_cpython(
     '2.7',
     '/usr/local/python-2.7-head',
-    $build_home + '/build/python-2.7.sh')
+    $build_home + '/build/python-2.7.sh',
+    '')
 install_cpython(
     'default',
     '/usr/local/python-head',
-    $build_home + '/build/python.sh')
+    $build_home + '/build/python.sh',
+    '-p /usr/local/python-3.3.2/bin/python3')
