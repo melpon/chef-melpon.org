@@ -25,6 +25,7 @@ def install_erlang(branch, prefix, build_sh)
         git clean -xdqf
         git checkout #{branch}
         git clean -xdqf
+        git reset --hard
         git pull --rebase
 
         ./otp_build autoconf
