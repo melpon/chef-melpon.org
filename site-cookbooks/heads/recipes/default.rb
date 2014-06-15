@@ -33,15 +33,16 @@ file build_sh do
   content <<-SH
     has_error=0
     cd #{build_dir}
-    rm /tmp/heads_cron_error_scripts || true
-    touch /tmp/heads_cron_error_scripts
+    rm /tmp/heads/cron/error_scripts || true
+    mkdir -p /tmp/heads/cron
+    touch /tmp/heads/cron/error_scripts
     echo "[`date`] ---- BEGIN $0 ----"
     for line in `ls *.sh -1`; do
       echo "[`date`] start building $line"
-      ./$line > /tmp/heads_cron_$line 2>&1
+      ./$line > /tmp/heads/cron/$line 2>&1
       if [ $? -ne 0 ]; then
-        echo "[`date`] FAILURE: $line. log file is /tmp/heads_cron_$line"
-        echo "$line" >> /tmp/heads_cron_error_scripts
+        echo "[`date`] FAILURE: $line. log file is /tmp/heads/cron/$line"
+        echo "$line" >> /tmp/heads/cron/error_scripts
         has_error=1
       fi
       echo "[`date`] end building $line"
@@ -56,9 +57,9 @@ file with_cron_sh do
   user 'root'
   group 'root'
   content <<-SH
-    #{build_sh} > /tmp/heads_cron 2>&1
+    #{build_sh} > /tmp/heads/cron/log 2>&1
     if [ $? -ne 0 ]; then
-        #{twitter_post_sh} /tmp/heads_cron_error_scripts
+        #{twitter_post_sh} /tmp/heads/cron/error_scripts
     fi
   SH
 end
