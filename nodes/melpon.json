@@ -22,6 +22,7 @@
         "recipe[mruby::head]",
         "recipe[perl]",
         "recipe[perl::head]",
+        "recipe[erlang]",
         "recipe[erlang::head]",
         "recipe[elixir::head]",
         "recipe[ghc]",

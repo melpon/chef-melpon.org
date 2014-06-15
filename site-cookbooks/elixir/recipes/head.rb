@@ -6,6 +6,7 @@ build_home = '/home/' + build_user
 build_dir = build_home + '/elixir'
 prefix = '/usr/local/elixir-head'
 build_sh = build_home + '/build/elixir.sh'
+erlang_prefix = '/usr/local/erlang-17.0'
 
 bash 'git clone elixir' do
   action :run
@@ -39,12 +40,12 @@ file build_sh do
     sed -e "s#PREFIX := /usr/local#PREFIX := #{prefix}#" Makefile > Makefile.tmp
     mv Makefile.tmp Makefile
 
-    PATH=/usr/local/erlang-head/bin:$PATH make clean test
+    PATH=#{erlang_prefix}/bin:$PATH make clean test
   '
   cd #{build_dir}
-  PATH=/usr/local/erlang-head/bin:$PATH make install
+  PATH=#{erlang_prefix}/bin:$PATH make install
   echo '#!/bin/bash
-PATH=/usr/local/erlang-head/bin:$PATH #{prefix}/bin/elixir "$@"' > #{prefix}/bin/run.sh
+PATH=#{erlang_prefix}/bin:$PATH #{prefix}/bin/elixir "$@"' > #{prefix}/bin/run.sh
   chmod +x #{prefix}/bin/run.sh
   SH
 end
