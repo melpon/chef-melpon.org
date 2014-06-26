@@ -57,6 +57,7 @@ file with_cron_sh do
   user 'root'
   group 'root'
   content <<-SH
+    mkdir -p /tmp/heads/cron
     #{build_sh} > /tmp/heads/cron/log 2>&1
     if [ $? -ne 0 ]; then
         #{twitter_post_sh} /tmp/heads/cron/error_scripts
