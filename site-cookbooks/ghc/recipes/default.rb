@@ -82,3 +82,8 @@ install_haskell_platform(
   '/usr/local/ghc-7.6.3/bin/ghc',
   '/usr/local/ghc-7.6.3/bin/ghc-pkg')
 
+install_ghc(
+  'http://www.haskell.org/ghc/dist/7.8.3/',
+  'ghc-7.8.3-x86_64-unknown-linux-deb7.tar.bz2',
+  'ghc-7.8.3',
+  '/usr/local/ghc-7.8.3')
