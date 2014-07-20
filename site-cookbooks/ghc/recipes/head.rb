@@ -6,7 +6,7 @@ build_dir = build_home + '/ghc'
 prefix = '/usr/local/ghc-head'
 build_sh = build_home + '/build/ghc.sh'
 
-with_ghc = '/usr/local/ghc-7.6.3/bin/ghc'
+with_ghc = '/usr/local/ghc-7.8.3/bin/ghc'
 
 bash 'git clone ghc' do
   action :run
