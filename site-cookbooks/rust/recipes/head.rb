@@ -66,7 +66,7 @@ file build_sh do
 
   echo '#!/bin/sh
 export PATH=#{with_gcc}/bin:$PATH
-export LD_LIBRARY_PATH=#{with_gcc}/lib64:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=#{with_gcc}/lib64:#{prefix}/lib:$LD_LIBRARY_PATH
 #{prefix}/bin/rustc "$@"
   ' > #{prefix}/bin/run-rustc.sh
   chmod +x #{prefix}/bin/run-rustc.sh
