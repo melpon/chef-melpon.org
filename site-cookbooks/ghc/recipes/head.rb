@@ -3,6 +3,7 @@ include_recipe 'heads'
 build_user = 'heads'
 build_home = '/home/' + build_user
 build_dir = build_home + '/ghc'
+# WARNING: use this command: "rm -rf #{prefix}"
 prefix = '/usr/local/ghc-head'
 build_sh = build_home + '/build/ghc.sh'
 
@@ -50,6 +51,7 @@ file build_sh do
     nice make -j3
   '
   cd #{build_dir}
+  rm -rf #{prefix}
   nice make install
   SH
 end
