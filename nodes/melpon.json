@@ -48,6 +48,8 @@
         "recipe[coffee-script]",
         "recipe[coffee-script::head]",
         "recipe[rill::head]",
+        "recipe[scala]",
+        "recipe[scala::head]",
         "recipe[analog]",
         "recipe[melpon-org]",
         "recipe[sendmail]"
