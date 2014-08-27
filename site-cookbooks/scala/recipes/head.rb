@@ -33,7 +33,7 @@ def install_scala(branch, prefix, build_sh)
       cd #{$build_dir}
       rm -r #{prefix} || /bin/true
       cp -r build/pack #{prefix}
-      chmod -R root:root #{prefix}
+      chown -R root:root #{prefix}
 
       echo "
 for cls in \\`ls *.class\\`; do
