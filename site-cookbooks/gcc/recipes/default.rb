@@ -21,7 +21,7 @@ def install_gcc(source, file, build_dir, prefix, flags)
   
     export LIBRARY_PATH=/usr/lib/x86_64-linux-gnu
     ../#{build_dir}/configure --prefix=#{prefix} #{flags}
-    make -j2 >log 2>err
+    nice make -j2 >log 2>err
     make install
   
     cd ../
