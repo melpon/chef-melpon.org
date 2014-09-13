@@ -100,7 +100,7 @@ import sys
 
 error_scripts = [line[:-1] for line in sys.stdin.readlines()]
 print '''[Wandbox] Failed Scripts: {}
-Build logs is here: http://melpon.org/wandbox/errors
+Build logs are here: http://melpon.org/wandbox/errors
 
 三へ( へ՞ਊ ՞)へ ﾊｯﾊｯ cc: @kikairoya'''.format(
     ', '.join(error_scripts))
