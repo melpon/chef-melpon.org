@@ -43,6 +43,7 @@ file build_sh do
     git submodule update -i
 
     cd #{build_dir}/src/libuv
+    git checkout 2acd544
     export CC="gcc -fPIC"
     ./autogen.sh
     ./configure --prefix=#{build_dir}/libuv
