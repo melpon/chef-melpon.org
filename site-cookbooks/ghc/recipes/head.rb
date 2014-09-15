@@ -41,6 +41,8 @@ file build_sh do
     git pull
     git clean -xdqf
 
+    cabal update
+
     export PATH=#{build_home}/.cabal/bin:$PATH
     cabal-dev install alex happy
 
