@@ -21,9 +21,12 @@ def install_cpython(branch, prefix, build_sh, venv_flags)
       group 'root'
       content <<-SH
       set -ex
+      cd #{$build_dir}
+      chown #{$build_user}:#{$builduser} -R ./
       su - #{$build_user} -c '
         set -ex
         cd #{$build_dir}
+        hg revert --all
         hg purge --all
         hg update -c #{branch}
         hg pull -u
