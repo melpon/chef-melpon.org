@@ -106,13 +106,12 @@ bash 'make cattleshed' do
   code <<-SH
   su - wandbox -c '
   cd wandbox/cattleshed
-  autoreconf -i
-  ./configure --with-boost-include=/usr/local/boost-1.47.0/include --with-boost-lib=/usr/local/boost-1.47.0/lib
+  ./configure --with-boost=/usr/local/boost-1.47.0
   make
   '
   SH
 
-  not_if "su - wandbox -c 'test -e wandbox/cattleshed/src/server.exe'"
+  not_if "su - wandbox -c 'test -e /usr/local/cattleshed/bin/cattleshed'"
 end
 
 bash 'run cattleshed' do
@@ -128,3 +127,80 @@ cookbook_file '/etc/init/cattleshed.conf' do
 
   notifies :run, 'bash[run cattleshed]', :immediately
 end
+
+
+######################
+# for kennel2
+######################
+
+bash 'install cppcms' do
+  action :run
+  cwd Chef::Config[:file_cache_path]
+
+  code <<-SH
+    set -ex
+
+    rm -rf cppcms || true
+    mkdir cppcms
+    cd cppcms
+
+    git clone https://github.com/melpon/cppcms source
+
+    mkdir build
+    cd build
+    cmake ../source/ -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local/cppcms -DDISABLE_SHARED=ON -DDISABLE_FCGI=ON -DDISABLE_SCGI=ON -DDISABLE_ICU_LOCALE=ON -DDISABLE_TCPCACHE=ON
+    make
+    make install
+  SH
+  not_if "test -e /usr/local/cppcms"
+end
+
+bash 'install cppdb' do
+  action :run
+  cwd Chef::Config[:file_cache_path]
+
+  code <<-SH
+    set -ex
+
+    rm -rf cppdb || true
+    mkdir cppdb
+    cd cppdb
+
+    git clone https://github.com/melpon/cppdb source
+
+    mkdir build
+    cd build
+    cmake ../source/ -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local/cppdb -DDISABLE_MYSQL=ON -DDISABLE_PQ=ON -DDISABLE_ODBC=ON
+    make
+    make install
+  SH
+  not_if "test -e /usr/local/cppdb"
+end
+
+bash 'install kennel2' do
+  action :run
+
+  code <<-SH
+    set -ex
+    su - wandbox -c '
+      set -ex
+      cd wandbox/kennel2
+      git clean -xdqf
+      autoreconf -i
+      ./configure --prefix=/usr/local/kennel2 --with-cppcms=/usr/local/cppcms --with-cppdb=/usr/local/cppdb
+      make
+    '
+    cd /home/wandbox/wandbox/kennel2
+    make install
+  SH
+
+  not_if "test -e /usr/local/kennel2"
+end
+
+cookbook_file '/etc/init/kennel2.conf' do
+  user 'root'
+  group 'root'
+  mode '0644'
+end
+
+
