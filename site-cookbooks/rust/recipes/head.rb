@@ -42,22 +42,13 @@ file build_sh do
     git pull
     git submodule update -i
 
-    cd #{build_dir}/src/libuv
-    git checkout 2acd544
-    export CC="gcc -fPIC"
-    ./autogen.sh
-    ./configure --prefix=#{build_dir}/libuv
-    nice make
-    nice make check
-    nice make install
-
     cd #{build_dir}
     export PATH="#{with_gcc}/bin:$PATH"
     export CC="#{with_gcc}/bin/gcc"
     export CXX="#{with_gcc}/bin/g++"
     export LDFLAGS="-Wl,-rpath,#{with_gcc}/lib64"
     export RUSTFLAGS="-C linker=#{with_gcc}/bin/g++ -C link-args=-Wl,-rpath,#{with_gcc}/lib64"
-    ./configure --prefix=#{prefix} --sysconfdir=#{prefix}/etc --disable-docs --disable-llvm-assertions --disable-debug --enable-llvm-static-stdcpp --libuv-root=#{build_dir}/libuv/lib
+    ./configure --prefix=#{prefix} --sysconfdir=#{prefix}/etc --disable-docs --disable-llvm-assertions --disable-debug --enable-llvm-static-stdcpp
     nice make RUSTFLAGS="$RUSTFLAGS" -j3 -k
     nice make RUSTFLAGS="$RUSTFLAGS" -j3 -k
     nice make RUSTFLAGS="$RUSTFLAGS"
