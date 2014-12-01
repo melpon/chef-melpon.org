@@ -40,6 +40,7 @@ file build_sh do
     git reset --hard master
     git pull
     git clean -xdqf
+    ./sync-all clean -xdqf
 
     cabal update
 
