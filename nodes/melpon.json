@@ -1,7 +1,6 @@
 {
     "run_list":[
         "recipe[nginx]",
-        "recipe[swapfile]",
         "recipe[andare]",
         "role[python-2_7_3]",
         "role[python-3_3_2]",
