@@ -61,6 +61,8 @@ file build_sh do
     git reset --hard
     git pull
     git clean -xdqf
+    cd libphobos
+    autoreconf -i
 
     cd #{build_dir}/gcc-source
     git clean -xdqf
