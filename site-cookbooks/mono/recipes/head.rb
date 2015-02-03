@@ -31,7 +31,7 @@ file build_sh do
     git clean -xdqf
 
     ./autogen.sh --prefix=#{prefix} --disable-nls
-    PATH=/usr/local/mono-3.2.0/bin:$PATH nice make
+    nice make
   '
   cd #{build_dir}
   nice make install
