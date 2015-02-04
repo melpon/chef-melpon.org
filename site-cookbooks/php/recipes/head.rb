@@ -14,6 +14,12 @@ bash 'git clone php' do
   not_if "test -d #{build_home + '/php-src'}"
 end
 
+bash 'apt-get build-dep php5' do
+  action :run
+  user 'root'
+  code "apt-get build-dep php5"
+end
+
 file build_sh do
   mode '0755'
   user 'root'
