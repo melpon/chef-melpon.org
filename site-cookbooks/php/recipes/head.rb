@@ -34,7 +34,7 @@ file build_sh do
     git pull origin master
 
     ./buildconf
-    ./configure --prefix=#{prefix}
+    ./configure --prefix=#{prefix} --disable-phar --without-pear
     nice make
   '
   cd #{build_dir}
