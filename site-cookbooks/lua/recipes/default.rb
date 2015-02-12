@@ -36,4 +36,5 @@ def install_lua(source, file, build_dir, prefix)
 end
 
 install_lua('http://www.lua.org/ftp/', 'lua-5.2.2.tar.gz', 'lua-5.2.2', '/usr/local/lua-5.2.2')
+install_lua('http://www.lua.org/ftp/', 'lua-5.3.0.tar.gz', 'lua-5.3.0', '/usr/local/lua-5.3.0')
 
