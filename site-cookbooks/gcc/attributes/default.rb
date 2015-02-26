@@ -1,5 +1,11 @@
 default['gcc_list'] = [
   {
+    'source' => 'http://ftp.tsukuba.wide.ad.jp/software/gcc/releases/gcc-4.9.2/',
+    'file' => 'gcc-4.9.2.tar.gz',
+    'build_dir' => 'gcc-4.9.2',
+    'prefix' => '/usr/local/gcc-4.9.2',
+    'flags' => '--enable-languages=c,c++ --enable-lto --disable-multilib --without-ppl --without-cloog-ppl --enable-checking=release --disable-nls',
+  },{
     'source' => 'http://ftp.tsukuba.wide.ad.jp/software/gcc/releases/gcc-4.9.1/',
     'file' => 'gcc-4.9.1.tar.gz',
     'build_dir' => 'gcc-4.9.1',
