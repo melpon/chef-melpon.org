@@ -70,7 +70,7 @@ file build_sh do
     git pull
   '
   cd /home/heads/gdc/gcc-source
-  UNTIL=`cat ../gdc-source/gcc.version|cut -d- -f3|sed 's/\\(....\\)\\(..\\)\\(..\\)/\\\\1-\\\\2-\\\\3/'`
+  UNTIL=`cat ../gdc-source/gcc.version | cut -d- -f3 | date -f - '+%F +1 day' | date -f - +%F`
   COMMIT=`git log origin/master --until $UNTIL -n1 --pretty=format:%H`
   echo $COMMIT > commit
   su - heads -c '
