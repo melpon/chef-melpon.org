@@ -47,6 +47,7 @@
         "recipe[coffee-script::head]",
         "recipe[scala]",
         "recipe[scala::head]",
+        "recipe[vim]",
         "recipe[analog]",
         "recipe[melpon-org]",
         "recipe[sendmail]"
