@@ -17,7 +17,7 @@ bash 'fossil clone sqlite' do
   code <<-SH
     su - #{build_user} -c '
       mkdir -p #{build_dir}
-      fossil clone http://www.sqlite.org/cgi/src #{build_dir + '/sqlite.fossil'}
+      fossil clone https://www.sqlite.org/cgi/src #{build_dir + '/sqlite.fossil'}
     '
   SH
   not_if "test -e #{build_dir + '/sqlite.fossil'}"
