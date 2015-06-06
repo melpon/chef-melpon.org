@@ -12,6 +12,55 @@ bash 'git clone scala' do
   not_if "test -d #{$build_home + '/scala'}"
 end
 
+def install_scala_java8(branch, prefix, build_sh, java_home, ant_path)
+    file build_sh do
+      mode '0755'
+      user 'root'
+      group 'root'
+      content <<-SH
+      set -ex
+      su - #{$build_user} -c '
+        set -ex
+        cd #{$build_dir}
+        git clean -xdqf
+        git checkout #{branch}
+        git clean -xdqf
+        git reset --hard
+        git pull --rebase
+
+        JAVA_HOME=#{java_home} nice #{ant_path}/bin/ant build-opt
+      '
+      cd #{$build_dir}
+      rm -r #{prefix} || /bin/true
+      cp -r build/pack #{prefix}
+      chown -R root:root #{prefix}
+
+      echo "
+export JAVA_HOME=#{java_home}
+for cls in \\`ls *.class\\`; do
+  /usr/bin/javap \\$cls | grep 'public static void main(java.lang.String\\[\\])' > /dev/null 2>&1
+  if [ \\$? -eq 0 ]; then
+    #{prefix}/bin/scala \\$@ \\${cls%.*}
+    exit \\$?
+  fi
+done
+echo 'The program compiled successfully, but main class was not found.' >&2
+echo 'Main class should contain method: public static void main (String[] args).' >&2
+exit 1
+      " > #{prefix}/bin/run.sh
+      chmod +x #{prefix}/bin/run.sh
+      SH
+    end
+
+    # test building
+    bash "test building scala #{branch} branch" do
+      action :run
+      user 'root'
+      code build_sh
+      not_if "test -d #{prefix + '/bin'}"
+    end
+end
+
 def install_scala(branch, prefix, build_sh)
     file build_sh do
       mode '0755'
@@ -60,10 +109,12 @@ exit 1
     end
 end
 
-install_scala(
+install_scala_java8(
     '2.12.x',
     '/usr/local/scala-2.12.x',
-    $build_home + '/build/scala-2.12.x.sh')
+    $build_home + '/build/scala-2.12.x.sh',
+    '/usr/local/java8',
+    '/usr/local/apache-ant-1.9.4')
 
 install_scala(
     '2.11.x',
