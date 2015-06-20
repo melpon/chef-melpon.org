@@ -61,7 +61,7 @@ file build_sh do
     cd $LLVM_BUILD
 
     # build llvm-head
-    CC=#{with_gcc}/bin/gcc CXX=#{with_gcc}/bin/g++ $LLVM_SOURCE/configure --prefix=#{llvm_prefix} --enable-optimized --enable-assertions=no --enable-targets=host-only --enable-clang-static-analyzer --with-gcc-toolchain=#{with_gcc}
+    CC=#{with_gcc}/bin/gcc CXX=#{with_gcc}/bin/g++ LD_LIBRARY_PATH=#{with_gcc}/lib64:$LD_LIBRARY_PATH ../cmake/bin/cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=#{llvm_prefix} $LLVM_SOURCE
     nice make -j2
   '
   cd #{build_dir}/llvm-build
@@ -91,7 +91,7 @@ export LD_LIBRARY_PATH=#{with_gcc}/lib64:$LD_LIBRARY_PATH
     cd $LIBCXX_BUILD
 
     # build libcxx-head
-    CC=#{llvm_prefix}/bin/clang CXX=#{llvm_prefix}/bin/clang++ cmake -G "Unix Makefiles" -DLIBCXX_CXX_ABI=libsupc++ -DLIBCXX_CXX_ABI_INCLUDE_PATHS="/usr/include/c++/4.6;/usr/include/c++/4.6/x86_64-linux-gnu" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=#{libcxx_prefix} $LIBCXX_SOURCE
+    CC=#{llvm_prefix}/bin/clang CXX=#{llvm_prefix}/bin/clang++ ../cmake/bin/cmake -G "Unix Makefiles" -DLIBCXX_CXX_ABI=libsupc++ -DLIBCXX_CXX_ABI_INCLUDE_PATHS="/usr/include/c++/4.6;/usr/include/c++/4.6/x86_64-linux-gnu" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=#{libcxx_prefix} $LIBCXX_SOURCE
     nice make -j2
   '
   cd #{build_dir}/libcxx-build
