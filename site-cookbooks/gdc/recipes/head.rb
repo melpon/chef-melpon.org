@@ -61,8 +61,9 @@ file build_sh do
     git reset --hard
     git pull
     git clean -xdqf
-    cd libphobos
-    autoreconf -i
+    #cd libphobos
+    #autoreconf -i
+    sed -i "s/d-warn = /d-warn = -Wno-suggest-attribute=format /" gcc/d/Make-lang.in
 
     cd #{build_dir}/gcc-source
     git clean -xdqf
