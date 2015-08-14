@@ -130,3 +130,10 @@ install_boost(
   '/usr/local/boost-1.58.0',
   '--without-mpi',
   false)
+install_boost(
+  'http://sourceforge.net/projects/boost/files/boost/1.59.0/',
+  'boost_1_59_0.tar.gz',
+  'boost_1_59_0',
+  '/usr/local/boost-1.59.0',
+  '--without-mpi',
+  false)
