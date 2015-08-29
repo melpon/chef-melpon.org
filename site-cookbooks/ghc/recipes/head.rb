@@ -40,7 +40,7 @@ file build_sh do
     git reset --hard master
     git pull
     git clean -xdqf
-    ./sync-all clean -xdqf
+    git submodule update -i
 
     cabal update
 
@@ -48,8 +48,7 @@ file build_sh do
     cabal-dev install alex happy
 
     export PATH=#{build_dir}/cabal-dev/bin:$PATH
-    ./sync-all get
-    perl boot
+    ./boot
     ./configure --prefix=#{prefix} --with-ghc=#{with_ghc}
     nice make -j3
   '
