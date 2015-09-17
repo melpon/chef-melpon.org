@@ -1,0 +1,19 @@
+{
+  "name": "python-3_5_0",
+  "chef_type": "role",
+  "json_class": "Chef::Role",
+  "description": "Python 3.5.0",
+  "default_attributes": {
+    "python": {
+        "install_method": "source",
+        "prefix_dir": "/usr/local/python-3.5.0",
+        "binary": "/usr/local/python-3.5.0/bin/python3",
+        "version": "3.5.0",
+        "checksum": null,
+        "distribute_script_url": "https://gist.githubusercontent.com/melpon/89594bbc93763eb418ae/raw/54fed414cc9ef1a0abeed279eb01097784fb654b/distribute_setup.py"
+    }
+  },
+  "run_list": [
+    "recipe[python]"
+  ]
+}

@@ -3,6 +3,8 @@
         "recipe[nginx]",
         "role[python-2_7_3]",
         "role[python-3_3_2]",
+        "role[python-3_4_3]",
+        "role[python-3_5_0]",
         "recipe[cpython::head]",
         "recipe[msgpack::cpp]",
         "recipe[wandbox]",
