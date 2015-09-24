@@ -13,6 +13,7 @@
         "recipe[gcc::head]",
         "recipe[gdc::head]",
         "recipe[sprout]",
+        "recipe[msgpack::head]",
         "recipe[clang]",
         "recipe[clang::head]",
         "recipe[pypy]",
