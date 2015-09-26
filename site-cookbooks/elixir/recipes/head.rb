@@ -6,7 +6,7 @@ build_home = '/home/' + build_user
 build_dir = build_home + '/elixir'
 prefix = '/usr/local/elixir-head'
 build_sh = build_home + '/build/elixir.sh'
-erlang_prefix = '/usr/local/erlang-17.0'
+erlang_prefix = '/usr/local/erlang-18.1'
 
 bash 'git clone elixir' do
   action :run
