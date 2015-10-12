@@ -6,8 +6,8 @@ build_dir = build_home + '/mruby'
 prefix = '/usr/local/mruby-head'
 build_sh = build_home + '/build/mruby.sh'
 
-#ruby = '/usr/local/ruby-2.0.0-p247/bin/ruby'
-ruby = 'ruby'
+ruby = '/usr/local/ruby-2.0.0-p247/bin/ruby'
+#ruby = 'ruby'
 
 bash 'git clone mruby' do
   action :run
