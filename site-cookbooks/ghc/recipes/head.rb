@@ -37,6 +37,7 @@ file build_sh do
     set -ex
     cd #{build_dir}
     git clean -xdqf
+    git submodule foreach git clean -xdqf
     git reset --hard master
     git pull
     git clean -xdqf
