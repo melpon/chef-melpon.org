@@ -5,6 +5,7 @@ build_home = '/home/' + build_user
 build_dir = build_home + '/ruby'
 prefix = '/usr/local/ruby-head'
 build_sh = build_home + '/build/ruby.sh'
+baseruby = '/usr/local/ruby-2.0.0-p247/bin/ruby'
 
 bash 'git clone ruby' do
   action :run
@@ -30,7 +31,7 @@ file build_sh do
     git pull --ff-only
 
     autoconf
-    ./configure --prefix=#{prefix}
+    ./configure --with-baseruby=#{baseruby} --prefix=#{prefix}
     nice make
   '
   cd #{build_dir}
