@@ -5,6 +5,7 @@
         "role[python-3_3_2]",
         "role[python-3_4_3]",
         "role[python-3_5_0]",
+        "role[python-3_5_1]",
         "recipe[cpython::head]",
         "recipe[msgpack::cpp]",
         "recipe[gcc]",
