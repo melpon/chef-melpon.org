@@ -7,8 +7,6 @@
         "role[python-3_5_0]",
         "recipe[cpython::head]",
         "recipe[msgpack::cpp]",
-        "recipe[wandbox]",
-        "recipe[mpidl-web]",
         "recipe[gcc]",
         "recipe[gcc::head]",
         "recipe[gdc::head]",
@@ -52,7 +50,6 @@
         "recipe[scala::head]",
         "recipe[vim]",
         "recipe[analog]",
-        "recipe[melpon-org]",
         "recipe[sendmail]"
     ],
     "build_essential": {

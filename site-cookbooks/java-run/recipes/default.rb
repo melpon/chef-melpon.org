@@ -18,3 +18,9 @@ cookbook_file '/usr/local/java-run/bin/run.sh' do
   group 'root'
   mode '0755'
 end
+
+cookbook_file '/usr/local/java-run/bin/run8.sh' do
+  user 'root'
+  group 'root'
+  mode '0755'
+end
