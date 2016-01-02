@@ -87,3 +87,9 @@ install_ghc(
   'ghc-7.8.3-x86_64-unknown-linux-deb7.tar.bz2',
   'ghc-7.8.3',
   '/usr/local/ghc-7.8.3')
+
+install_ghc(
+  'http://www.haskell.org/ghc/dist/7.10.3/',
+  'ghc-7.10.3b-x86_64-deb7-linux.tar.bz2',
+  'ghc-7.10.3',
+  '/usr/local/ghc-7.10.3')
