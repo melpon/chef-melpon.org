@@ -11,6 +11,8 @@
         "recipe[gcc]",
         "recipe[gcc::head]",
         "recipe[gdc::head]",
+        "recipe[dmd]",
+        "recipe[dmd::head]",
         "recipe[sprout]",
         "recipe[msgpack::head]",
         "recipe[clang]",
