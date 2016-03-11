@@ -64,6 +64,7 @@ file build_sh do
     #cd libphobos
     #autoreconf -i
     sed -i "s/d-warn = .*/\\\\0 -Wno-suggest-attribute=format/" gcc/d/Make-lang.in
+    sed -i "s/real sgngam = 1/real sgngam = 1.0L/" libphobos/src/std/internal/math/gammafunction.d
 
     cd #{build_dir}/gcc-source
     git clean -xdqf
@@ -71,8 +72,9 @@ file build_sh do
     git pull
   '
   cd /home/heads/gdc/gcc-source
-  UNTIL=`cat ../gdc-source/gcc.version | cut -d- -f3 | date -f - +%FT24:00:00Z+00:00`
-  COMMIT=`git log origin/master --until $UNTIL -n1 --pretty=format:%H`
+  VERSION=`cut -d- -f3 < ../gdc-source/gcc.version`
+  BEFORE=`date "+%Y-%m-%d" -d "$VERSION next day"`
+  COMMIT=`TZ=UTC git log -n1 --pretty=tformat:%H --before=$BEFORE`
   echo $COMMIT > commit
   su - heads -c '
     set -ex
