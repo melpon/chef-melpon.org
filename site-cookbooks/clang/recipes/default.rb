@@ -165,6 +165,13 @@ end
 
 
 install_llvm_with_gcc(
+    'llvm-3.8',
+    'http://llvm.org/svn/llvm-project/llvm/tags/RELEASE_380/final',
+    'http://llvm.org/svn/llvm-project/cfe/tags/RELEASE_380/final',
+    'http://llvm.org/svn/llvm-project/compiler-rt/tags/RELEASE_380/final',
+    '/usr/local/llvm-3.8',
+    with_gcc)
+install_llvm_with_gcc(
     'llvm-3.7',
     'http://llvm.org/svn/llvm-project/llvm/tags/RELEASE_370/final',
     'http://llvm.org/svn/llvm-project/cfe/tags/RELEASE_370/final',
@@ -216,6 +223,12 @@ install_llvm(
     'http://llvm.org/svn/llvm-project/compiler-rt/tags/RELEASE_30/final',
     '/usr/local/llvm-3.0')
 
+install_libcxx_with_gcc(
+    'libcxx-3.8',
+    'http://llvm.org/svn/llvm-project/libcxx/tags/RELEASE_380/final',
+    '/usr/local/libcxx-3.8',
+    '/usr/local/llvm-3.8',
+    with_gcc)
 install_libcxx_with_gcc(
     'libcxx-3.7',
     'http://llvm.org/svn/llvm-project/libcxx/tags/RELEASE_370/final',
