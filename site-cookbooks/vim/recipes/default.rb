@@ -39,9 +39,34 @@ def install_vim(repo, branch, build_dir, prefix)
   end
 end
 
+def install_vim_git(repo, branch, build_dir, prefix)
+  bash "install-vim #{build_dir}" do
+    user "root"
+    cwd Chef::Config[:file_cache_path]
+    code <<-EOH
+      set -ex
+      git clone #{repo} #{build_dir}
+      cd #{build_dir}
+      git reset --hard #{branch}
+      ./configure --with-features=huge --prefix=#{prefix}
+      make
+      make install
+      cd ../
+      rm -r #{build_dir}
+    EOH
+    not_if "test -e #{prefix}/bin/vim"
+  end
+end
+
 install_vim(
   'https://vim.googlecode.com/hg/',
   'v7-4-729',
   'vim-7.4.729',
   '/usr/local/vim-7.4.729')
+
+install_vim_git(
+  'https://github.com/vim/vim.git',
+  'v7.4.1714',
+  'vim-7.4.1714',
+  '/usr/local/vim-7.4.1714')
 
