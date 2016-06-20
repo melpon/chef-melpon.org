@@ -110,13 +110,6 @@ exit 1
 end
 
 install_scala_java8(
-    '2.12.x',
-    '/usr/local/scala-2.12.x',
-    $build_home + '/build/scala-2.12.x.sh',
-    '/usr/local/java8',
-    '/usr/local/apache-ant-1.9.4')
-
-install_scala_java8(
     '2.11.x',
     '/usr/local/scala-2.11.x',
     $build_home + '/build/scala-2.11.x.sh',
